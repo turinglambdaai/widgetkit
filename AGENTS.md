@@ -56,9 +56,11 @@ A curated collection of GUI widgets for Racket. Two rules:
 | User intent | Widget | Minimal snippet (verified) |
 |-------------|--------|----------------------------|
 | Placeholder + tooltip on a field | `cue-mixin`, `tooltip-mixin` | `(new (cue-mixin "" (tooltip-mixin text-field%)) [parent f] [label "Name:"] [cue "Enter your name"] [tooltip "Full name"])` |
+| Placeholder + tooltip (simpler) | `labeled-field%` | `(new labeled-field% [parent f] [label "Name:"] [cue "Enter your name"] [tooltip "Full name"])` |
 | Aligned grid / form layout | `table-panel%` | `(new table-panel% [parent f] [dimensions '(4 2)])` |
 | Date input (dd.mm.yyyy) | `date-text-field%` | `(new date-text-field% [parent f] [label "Date:"])` |
 | Very large list / custom-drawn rows | `canvas-list%` | `(new canvas-list% [parent f] [items (vector "a" "b")] [item-height 22] [action-callback (λ (c item e) (void))])` |
+| Big list of strings, simple pick action | `text-list%` | `(new text-list% [parent f] [items (vector "a" "b")] [action (λ (item) (void))])` |
 | Bottom status bar (+ optional progress) | `status-bar%` | `(new status-bar% [parent f] [show-progress #t] [initial-message "Ready."])` |
 | "Busy", unknown duration | `spinner%` | `(new spinner% [parent f] [diameter 28])` then `(send sp start)` / `(send sp stop)` |
 | Compact `[-] value [+]` numeric | `stepper%` | `(new stepper% [parent f] [min-value 0] [max-value 20] [initial 5])` |
@@ -95,9 +97,11 @@ otherwise copy:
   children for you.
 - **`cue-mixin` takes 2 arguments**: `(cue-mixin default-cue-string
   base-class)` — it is not a plain `class -> class` mixin. `tooltip-mixin`
-  is `(tooltip-mixin base-class)` (1 arg).
+  is `(tooltip-mixin base-class)` (1 arg). Prefer `labeled-field%`, which
+  bakes in the correct composition.
 - **`canvas-list%` callbacks are 3-argument**: `(λ (canvas item event) ...)`
-  for `action-callback` / `selection-callback`.
+  for `action-callback` / `selection-callback`. Prefer `text-list%` for a list
+  of strings with a one-argument `(λ (item) ...)` action.
 - **`on-superwindow-show` is not augmentable** on `canvas%`. Do not
   `define/augment` it.
 - **`date-text-field%` starts a one-shot timer** scheduled to fire at the next

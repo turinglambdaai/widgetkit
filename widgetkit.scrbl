@@ -202,6 +202,33 @@ dots. Core @racket[gui] has no date entry widget.
 (new date-text-field% [parent f] [label "Date:"])
 ]
 
+@section{Consistency wrappers}
+
+These wrap the aggregated widgets to hide their API footguns behind a single,
+consistent class.
+
+@subsection{labeled-field%}
+
+A @racket[text-field%] with cue (placeholder) and tooltip already mixed in, so
+you do not have to remember that @racket[cue-mixin] takes two arguments and
+must be composed with @racket[tooltip-mixin].
+
+@racketblock[
+(new labeled-field% [parent f] [label "Name:"]
+     [cue "Enter your name"] [tooltip "Your full name"])
+]
+
+@subsection{text-list%}
+
+A @racket[canvas-list%] for a list of items rendered as text, with a
+one-argument action callback instead of the underlying three-argument one.
+
+@racketblock[
+(new text-list% [parent f]
+     [items (vector "a" "b" "c")]
+     [action (λ (item) (printf "picked ~a\n" item))])
+]
+
 @section[#:tag "companions"]{Recommended companions (install separately)}
 
 These heavier controls are deliberately @italic{not} hard dependencies, to

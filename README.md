@@ -64,6 +64,15 @@ racket examples/showcase.rkt
 | `spinner%` | only the determinate `gauge%` ships; no "busy, unknown duration" indicator |
 | `stepper%` | `slider%` covers ranges, but there's no compact `[-] value [+]` numeric stepper |
 
+### Convenience wrappers (new, MIT)
+
+Thin wrappers around the aggregated widgets that hide their API footguns behind one consistent class.
+
+| Widget | Wraps | Why |
+|--------|-------|-----|
+| `labeled-field%` | `cue-mixin` + `tooltip-mixin` | hides `cue-mixin`'s 2-argument footgun; one class with consistent `[cue]` / `[tooltip]` init |
+| `text-list%` | `canvas-list%` | hides the 3-argument callback; accept a simple `(λ (item) ...)` action |
+
 ### Aggregated (re-exported from mature packages)
 
 | Widget | Upstream package | Why core `racket/gui` isn't enough |
@@ -87,6 +96,8 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 | `table-panel-demo.rkt` | `table-panel%` |
 | `canvas-list-demo.rkt` | `canvas-list%` |
 | `date-input-demo.rkt` | `date-text-field%` |
+| `labeled-field-demo.rkt` | `labeled-field%` (cue + tooltip convenience) |
+| `text-list-demo.rkt` | `text-list%` (simple-action list) |
 
 ```bash
 racket examples/status-bar-demo.rkt   # any of them

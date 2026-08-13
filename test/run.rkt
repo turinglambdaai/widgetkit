@@ -35,6 +35,9 @@
 (check-true (class? canvas-list%)  "canvas-list% re-exported")
 (check-true (class? date-text-field%) "date-text-field% re-exported")
 
+(check-true (class? labeled-field%) "labeled-field% exported")
+(check-true (class? text-list%)      "text-list% exported")
+
 (check-true (procedure? cue-mixin)      "cue-mixin re-exported")
 (check-true (procedure? tooltip-mixin)  "tooltip-mixin re-exported")
 (check-true (procedure? validate-mixin) "validate-mixin re-exported")

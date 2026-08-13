@@ -64,6 +64,15 @@ racket examples/showcase.rkt
 | `spinner%` | 只有确定进度的 `gauge%`，没有"忙碌中、时长未知"的指示器 |
 | `stepper%` | `slider%` 能选范围，但没有紧凑的 `[-] 值 [+]` 数字步进 |
 
+### 便捷包装（新写，MIT）
+
+在聚合控件外面包一层，用统一的类隐藏其 API 陷阱。
+
+| 控件 | 包装 | 作用 |
+|------|------|------|
+| `labeled-field%` | `cue-mixin` + `tooltip-mixin` | 隐藏 `cue-mixin` 的 2 参陷阱；一个类，`[cue]`/`[tooltip]` 一致 |
+| `text-list%` | `canvas-list%` | 隐藏 3 参回调；接受简单的 `(λ (item) ...)` 动作 |
+
 ### 聚合（从成熟包 re-export）
 
 | 控件 | 上游包 | 为什么 core `racket/gui` 不够 |
@@ -87,6 +96,8 @@ racket examples/showcase.rkt
 | `table-panel-demo.rkt` | `table-panel%` |
 | `canvas-list-demo.rkt` | `canvas-list%` |
 | `date-input-demo.rkt` | `date-text-field%` |
+| `labeled-field-demo.rkt` | `labeled-field%`（cue + tooltip 便捷） |
+| `text-list-demo.rkt` | `text-list%`（简单动作列表） |
 
 ```bash
 racket examples/status-bar-demo.rkt   # 任选一个

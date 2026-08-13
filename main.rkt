@@ -45,11 +45,15 @@ SOFTWARE.
 
 (require "private/status-bar.rkt"
          "private/spinner.rkt"
-         "private/stepper.rkt")
+         "private/stepper.rkt"
+         "private/labeled-field.rkt"
+         "private/text-list.rkt")
 
 (provide (all-from-out "private/status-bar.rkt")
          (all-from-out "private/spinner.rkt")
-         (all-from-out "private/stepper.rkt"))
+         (all-from-out "private/stepper.rkt")
+         (all-from-out "private/labeled-field.rkt")
+         (all-from-out "private/text-list.rkt"))
 
 ;; ---------------------------------------------------------------------------
 ;; Layer 2 — aggregated widgets (maintained upstream, re-exported here)
