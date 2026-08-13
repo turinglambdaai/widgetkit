@@ -65,6 +65,7 @@ racket examples/showcase.rkt
 | `stepper%` | `slider%` covers ranges, but there's no compact `[-] value [+]` numeric stepper |
 | `disclosure%` | no collapsible / expand-collapse container (the "Advanced options…" pattern) |
 | `image-view%` | `canvas%` exists, but no ready-made widget to just display an image (fit / fixed scale) |
+| `progress-dialog%` | no modal "Working… / Cancel" dialog for long tasks (core has `gauge%` only) |
 
 ### Convenience wrappers (new, MIT)
 
@@ -103,6 +104,7 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 | `text-list-demo.rkt` | `text-list%` (simple-action list) |
 | `disclosure-demo.rkt` | `disclosure%` (collapsible section) |
 | `image-view-demo.rkt` | `image-view%` (display a bitmap) |
+| `progress-dialog-demo.rkt` | `progress-dialog%` (modal progress + cancel) |
 
 ```bash
 racket examples/status-bar-demo.rkt   # any of them

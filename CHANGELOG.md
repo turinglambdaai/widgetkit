@@ -4,6 +4,12 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.3.0] — 2026-08-13
+
+### Added — gap-filling widgets
+- `progress-dialog%` — a modal "Working… / Cancel" progress dialog for
+  long-running tasks, driven from a worker thread via `queue-callback`.
+
 ## [0.2.0] — 2026-08-13
 
 ### Added — gap-filling widgets

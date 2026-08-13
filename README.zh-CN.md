@@ -65,6 +65,7 @@ racket examples/showcase.rkt
 | `stepper%` | `slider%` 能选范围，但没有紧凑的 `[-] 值 [+]` 数字步进 |
 | `disclosure%` | 没有可折叠/展开收起的容器（"高级选项…"那种） |
 | `image-view%` | 有 `canvas%`，但没有现成控件直接显示一张图片（fit / 固定缩放） |
+| `progress-dialog%` | 没有长任务用的模态"处理中… / 取消"对话框（core 只有 `gauge%`） |
 
 ### 便捷包装（新写，MIT）
 
@@ -103,6 +104,7 @@ racket examples/showcase.rkt
 | `text-list-demo.rkt` | `text-list%`（简单动作列表） |
 | `disclosure-demo.rkt` | `disclosure%`（可折叠分组） |
 | `image-view-demo.rkt` | `image-view%`（显示图片） |
+| `progress-dialog-demo.rkt` | `progress-dialog%`（模态进度 + 取消） |
 
 ```bash
 racket examples/status-bar-demo.rkt   # 任选一个

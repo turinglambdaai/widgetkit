@@ -49,7 +49,8 @@ SOFTWARE.
          "private/labeled-field.rkt"
          "private/text-list.rkt"
          "private/disclosure.rkt"
-         "private/image-view.rkt")
+         "private/image-view.rkt"
+         "private/progress-dialog.rkt")
 
 (provide (all-from-out "private/status-bar.rkt")
          (all-from-out "private/spinner.rkt")
@@ -57,7 +58,8 @@ SOFTWARE.
          (all-from-out "private/labeled-field.rkt")
          (all-from-out "private/text-list.rkt")
          (all-from-out "private/disclosure.rkt")
-         (all-from-out "private/image-view.rkt"))
+         (all-from-out "private/image-view.rkt")
+         (all-from-out "private/progress-dialog.rkt"))
 
 ;; ---------------------------------------------------------------------------
 ;; Layer 2 — aggregated widgets (maintained upstream, re-exported here)

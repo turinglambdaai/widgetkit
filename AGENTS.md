@@ -63,6 +63,7 @@ A curated collection of GUI widgets for Racket. Two rules:
 | Big list of strings, simple pick action | `text-list%` | `(new text-list% [parent f] [items (vector "a" "b")] [action (λ (item) (void))])` |
 | Display an image (fit or fixed scale) | `image-view%` | `(new image-view% [parent f] [bitmap bmp] [scale 'fit])` or `(send iv load-file "x.png")` |
 | Bottom status bar (+ optional progress) | `status-bar%` | `(new status-bar% [parent f] [show-progress #t] [initial-message "Ready."])` |
+| Modal "Working… / Cancel" dialog | `progress-dialog%` | `(new progress-dialog% [parent f] [label "..."])`; drive from a thread + `queue-callback`, see `examples/progress-dialog-demo.rkt` |
 | "Busy", unknown duration | `spinner%` | `(new spinner% [parent f] [diameter 28])` then `(send sp start)` / `(send sp stop)` |
 | Compact `[-] value [+]` numeric | `stepper%` | `(new stepper% [parent f] [min-value 0] [max-value 20] [initial 5])` |
 | Collapsible ("Advanced…") section | `disclosure%` | `(new disclosure% [parent f] [label "Advanced"] [expanded? #f])` — add children to `(send d get-content)` |
@@ -111,6 +112,10 @@ otherwise copy:
 - **`date-text-field%` starts a one-shot timer** scheduled to fire at the next
   midnight. A script that constructs one will not exit on its own; call
   `(exit 0)` in non-GUI scripts. It is harmless inside a real app.
+- **Modal dialogs block in `show #t`.** Work that updates a modal dialog (e.g.
+  `progress-dialog%`) must run in a separate thread and touch the UI via
+  `queue-callback`; running it inline in the callback freezes the dialog. See
+  `examples/progress-dialog-demo.rkt`.
 - **Class errors surface at load/instantiate, not at compile.** "no such
   method", "not augmentable", and "unused initialization arguments" are all
   runtime errors — `raco make` will not catch them. Always **instantiate** to

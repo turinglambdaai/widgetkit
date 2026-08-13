@@ -168,6 +168,26 @@ widget to just show an image.
 Methods: @racket[(send iv set-bitmap b)], @racket[(send iv load-file path)],
 @racket[(send iv get-bitmap)].
 
+@subsection[#:tag "progress-dialog"]{progress-dialog%}
+
+A modal dialog showing a message and a determinate gauge, with an optional
+Cancel button. Drive it from a worker thread while @racket[(send pd show #t)]
+runs the modal event loop; update the UI via @racket[queue-callback] and close
+with @racket[(send pd show #f)]. See @filepath{examples/progress-dialog-demo.rkt}
+for the full pattern.
+
+@racketblock[
+(define pd (new progress-dialog% [parent f] [label "Working..."]))
+(void (thread
+       (λ ()
+         ... (queue-callback (λ () (send pd set-progress n))) ...
+         (queue-callback (λ () (send pd show #f))))))
+(send pd show #t)
+]
+
+Methods: @racket[(send pd set-progress n)], @racket[(send pd set-message s)],
+@racket[(send pd cancelled?)].
+
 @section{Aggregated widgets}
 
 These are re-exported from their upstream packages; see each package's own
