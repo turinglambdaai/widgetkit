@@ -24,7 +24,9 @@ jobs:
           version: stable
 
       - name: Install package and dependencies
-        run: raco pkg install --auto --no-docs .
+        # raco pkg install rejects "." as a source (ending path element must be
+        # a package name); the checkout directory name IS the package name.
+        run: raco pkg install --auto --no-docs "$PWD"
 
       - name: Install formatter
         run: raco pkg install --auto --no-docs fmt
