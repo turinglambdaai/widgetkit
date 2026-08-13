@@ -4,6 +4,15 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.6.0] — 2026-08-13
+
+### Changed — API quality
+- **Every public widget is now exported with contracts** (`provide/contract` +
+  `class/c`). All methods and key initialization arguments are runtime-checked;
+  misuse fails fast with blame pointing at the caller, and the contracts give
+  AI agents a machine-readable API surface. The internal `private/` modules
+  remain unchecked; contracts live at the `widgetkit` collection boundary.
+
 ## [0.5.0] — 2026-08-13
 
 ### Added — gap-filling widgets

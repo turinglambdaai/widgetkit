@@ -27,21 +27,16 @@ SOFTWARE.
 
 #lang racket/base
 
-;; widgetkit — a curated collection of GUI widgets for Racket.
+;; widgetkit -- a curated collection of GUI widgets for Racket.
 ;;
-;; The collection has two layers:
-;;
-;;   1. Gap-filling widgets (new, MIT) — small controls core racket/gui lacks:
-;;      status-bar%, spinner%, stepper%.
-;;   2. Aggregated widgets — re-exported from mature, standalone packages so a
-;;      single (require widgetkit) brings in the most commonly needed controls
-;;      (tooltips / cue text, grid layout, date entry, virtualized list).
-;;
-;; See widgetkit.scrbl for the full manual and examples/ for runnable demos.
+;; All public widgets are exported with contracts (see `contract-out` below):
+;; every method and key initialization argument is runtime-checked, with blame
+;; pointing at the caller that misused the API. This is the boundary; code
+;; inside private/ is unchecked.
 
-;; ---------------------------------------------------------------------------
-;; Layer 1 — gap-filling widgets (this repository)
-;; ---------------------------------------------------------------------------
+(require racket/contract
+         racket/class
+         racket/gui/base)
 
 (require "private/status-bar.rkt"
          "private/spinner.rkt"
@@ -57,22 +52,125 @@ SOFTWARE.
          "private/search-field.rkt"
          "private/stack.rkt")
 
-(provide (all-from-out "private/status-bar.rkt")
-         (all-from-out "private/spinner.rkt")
-         (all-from-out "private/stepper.rkt")
-         (all-from-out "private/labeled-field.rkt")
-         (all-from-out "private/text-list.rkt")
-         (all-from-out "private/disclosure.rkt")
-         (all-from-out "private/image-view.rkt")
-         (all-from-out "private/progress-dialog.rkt")
-         (all-from-out "private/log-view.rkt")
-         (all-from-out "private/split-view.rkt")
-         (all-from-out "private/toolbar.rkt")
-         (all-from-out "private/search-field.rkt")
-         (all-from-out "private/stack.rkt"))
+;; A color accepted by racket/gui drawing: a color name/string or a color%.
+(define color/c (or/c string? (is-a?/c color%)))
+;; A positive real number.
+(define positive-real/c (and/c real? positive?))
+;; A panel/pane container instance (what get-content / get-first return).
+(define container/c (is-a?/c area-container<%>))
 
 ;; ---------------------------------------------------------------------------
-;; Layer 2 — aggregated widgets (maintained upstream, re-exported here)
+;; Layer 1 -- gap-filling widgets (this repository), exported with contracts
+;; ---------------------------------------------------------------------------
+
+(provide
+ (contract-out
+  ;; status-bar%
+  [status-bar%
+   (class/c
+    (init [initial-message string?] [show-progress any/c])
+    (set-message (->m string? void?))
+    (set-progress (->m (real-in 0 100) void?))
+    (get-message (->m string?))
+    (clear (->m void?)))]
+
+  ;; spinner%
+  [spinner%
+   (class/c
+    (init-field [diameter positive-real/c]
+                [color color/c]
+                [track-color color/c]
+                [interval positive-real/c])
+    (start (->m void?))
+    (stop (->m void?))
+    (spinning? (->m boolean?)))]
+
+  ;; stepper%
+  [stepper%
+   (class/c
+    (init-field [min-value number?] [max-value number?] [step number?]
+                [initial number?] [show-value any/c])
+    (get-value (->m number?))
+    (set-value (->m number? void?))
+    (increment (->m void?))
+    (decrement (->m void?)))]
+  ;; clamp -- the numeric helper behind stepper%'s clamping
+  [clamp (-> real? real? real? real?)]
+
+  ;; disclosure%
+  [disclosure%
+   (class/c
+    (init-field [label string?] [expanded? any/c])
+    (get-content (->m container/c))
+    (is-expanded? (->m boolean?))
+    (set-expanded! (->m any/c void?)))]
+
+  ;; image-view%
+  [image-view%
+   (class/c
+    (init-field [bitmap (or/c (is-a?/c bitmap%) #f)]
+                [scale (or/c 'fit positive-real/c)])
+    (set-bitmap (->m (or/c (is-a?/c bitmap%) #f) void?))
+    (load-file (->m (or/c path? string?) void?))
+    (get-bitmap (->m (or/c (is-a?/c bitmap%) #f))))]
+
+  ;; progress-dialog%
+  [progress-dialog%
+   (class/c
+    (init-field [label string?] [cancellable any/c])
+    (set-progress (->m (real-in 0 100) void?))
+    (set-message (->m string? void?))
+    (cancelled? (->m boolean?)))]
+
+  ;; log-view%
+  [log-view%
+   (class/c
+    (init-field [max-lines exact-positive-integer?]
+                [monospace? any/c] [wrap? any/c] [read-only? any/c])
+    (append-line (->m any/c void?))
+    (clear (->m void?))
+    (get-text (->m string?))
+    (scroll-to-bottom (->m void?)))]
+
+  ;; split-view%
+  [split-view%
+   (class/c
+    (init-field [orientation (or/c 'horizontal 'vertical)]
+                [fraction (real-in 0 1)])
+    (set-fraction (->m (real-in 0 1) void?))
+    (get-fraction (->m (real-in 0 1)))
+    (get-first (->m container/c))
+    (get-second (->m container/c)))]
+
+  ;; toolbar%
+  [toolbar%
+   (class/c
+    (add-button (->m string? (-> any) void?))
+    (add-separator (->m void?)))]
+
+  ;; search-field%
+  [search-field%
+   (class/c
+    (get-text (->m string?))
+    (set-text (->m string? void?)))]
+
+  ;; stack%
+  [stack%
+   (class/c
+    (add-page (->m container/c))
+    (page-count (->m exact-nonnegative-integer?))
+    (show-page (->m exact-nonnegative-integer? void?)))]
+
+  ;; labeled-field% -- a text-field% subclass (cue + tooltip baked in)
+  [labeled-field% (subclass?/c text-field%)]
+
+  ;; text-list% -- a canvas-list% subclass
+  [text-list% (subclass?/c canvas-list%)]))
+
+;; ---------------------------------------------------------------------------
+;; Layer 2 -- aggregated widgets (re-exported from mature upstream packages,
+;; which already carry their own contracts). A single (require widgetkit)
+;; brings them in alongside Layer 1.
 ;; ---------------------------------------------------------------------------
 
 (require gui-widget-mixins     ; tooltips, cue text, validation for text-field%

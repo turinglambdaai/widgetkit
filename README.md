@@ -12,6 +12,7 @@ A curated collection of GUI widgets for Racket. It gathers the controls almost e
 - **Curated, not redundant** — every widget fills a gap core `racket/gui` leaves open; nothing duplicates the toolkit
 - **Reuse over rewrite** — when a mature package already does the job, widgetkit depends on it; new code only where no good solution exists
 - **Runnable example per widget** — plus a showcase gallery you can click through
+- **Fully contracted API** — every widget method and key argument is runtime-checked via `provide/contract` + `class/c`, so misuse fails fast with clear blame (and gives AI agents a machine-readable API)
 
 ## Requirements
 
