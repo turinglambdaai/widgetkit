@@ -1,8 +1,8 @@
-# widgetkit
+# Widgetkit
 
-A curated collection of GUI widgets for Racket. It gathers the controls almost every `racket/gui` app wants but that the core toolkit leaves you to build yourself — tooltips and placeholder text, grid layout, date entry, virtualized lists, status bars, spinners and steppers — behind a single `(require widgetkit)`, with one manual and a runnable example per widget.
+A curated collection of GUI widgets for [Racket](https://racket-lang.org/). It gathers the controls almost every `racket/gui` app wants but that the core toolkit leaves you to build yourself — tooltips and placeholder text, grid layout, date entry, virtualized lists, status bars, spinners and steppers — behind a single `(require widgetkit)`, with one manual and a runnable example per widget.
 
-![Racket](https://img.shields.io/badge/Racket-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![CI](https://github.com/turinglambdaai/widgetkit/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/widgetkit/actions/workflows/ci.yml)
+![Racket](https://img.shields.io/badge/Racket-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 
 **English** · [中文](README.zh-CN.md)
 
@@ -18,8 +18,7 @@ A curated collection of GUI widgets for Racket. It gathers the controls almost e
 
 | Dependency | Purpose / Version |
 |------------|-------------------|
-| Racket | 8.0 or later |
-| `gui-lib` | the `racket/gui` toolkit (pulled in automatically) |
+| [Racket](https://racket-lang.org/) | 8.0 or later |
 
 ## Quick Start
 
@@ -150,4 +149,4 @@ Contributions that add a widget are welcome — see [CONTRIBUTING.md](CONTRIBUTI
 
 ## License
 
-Licensed under the [MIT License](LICENSE). Aggregated widgets retain their upstream licenses (Apache-2.0/MIT, LGPL-2.1, MIT); see each package for details.
+Licensed under the [MIT License](LICENSE). Aggregated widgets keep their upstream licenses (Apache-2.0/MIT, LGPL-2.1, MIT); see each package for details.
