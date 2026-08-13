@@ -65,6 +65,10 @@ A curated collection of GUI widgets for Racket. Two rules:
 | Bottom status bar (+ optional progress) | `status-bar%` | `(new status-bar% [parent f] [show-progress #t] [initial-message "Ready."])` |
 | Modal "Working… / Cancel" dialog | `progress-dialog%` | `(new progress-dialog% [parent f] [label "..."])`; drive from a thread + `queue-callback`, see `examples/progress-dialog-demo.rkt` |
 | Scrolling log / console output | `log-view%` | `(new log-view% [parent f] [max-lines 5000])`; `(send log append-line "...")` auto-scrolls |
+| Draggable split panes | `split-view%` | `(new split-view% [parent f] [orientation 'horizontal] [fraction 0.4])`; add children to `(send sv get-first)` / `get-second` |
+| App toolbar (buttons + separators) | `toolbar%` | `(new toolbar% [parent f])`; `(send tb add-button "Open" (λ () ...))`; `(send tb add-separator)` |
+| Search box (live filter) | `search-field%` | `(new search-field% [parent f] [callback (λ (q) ...)])` |
+| Switchable pages | `stack%` | `(new stack% [parent f])`; `(send st add-page)`; `(send st show-page i)` — pair with `choice%` for tabs |
 | "Busy", unknown duration | `spinner%` | `(new spinner% [parent f] [diameter 28])` then `(send sp start)` / `(send sp stop)` |
 | Compact `[-] value [+]` numeric | `stepper%` | `(new stepper% [parent f] [min-value 0] [max-value 20] [initial 5])` |
 | Collapsible ("Advanced…") section | `disclosure%` | `(new disclosure% [parent f] [label "Advanced"] [expanded? #f])` — add children to `(send d get-content)` |
@@ -104,6 +108,14 @@ otherwise copy:
   in a `horizontal-panel%`/`vertical-panel%`, or set
   `(send w stretchable-width/height #t)`. `log-view%` and `image-view%`
   stretch by default.
+- **Custom panel layout (overriding `place-children` / `container-size`):**
+  each child-info entry passed to these methods is a 4-element list
+  `(min-width min-height stretchable-width stretchable-height)` — there are no
+  margin slots. `container-size` takes `info` and returns `(values w h)`;
+  `place-children` takes `info width height` and returns a list of
+  `(list x y w h)` in the same child order. To force a relayout after changing
+  layout state, call `(send panel change-children (λ (l) l))`. Screen
+  coordinates are `client->screen` (not `client-to-screen`).
 - **`tab-panel%` tabs are visual only.** There is **no per-instance selection
   callback**, and `on-new-tab` is **not augmentable**. To switch pages, drive it
   from a `choice%`, or augment `on-new-request`. The tabs do not hide/show

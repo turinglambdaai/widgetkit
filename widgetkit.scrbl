@@ -205,6 +205,48 @@ read-only-with-programmatic-appends both need care).
 Methods: @racket[(send log append-line s)], @racket[(send log clear)],
 @racket[(send log get-text)], @racket[(send log scroll-to-bottom)].
 
+@subsection[#:tag "split-view"]{split-view%}
+
+Two panes separated by a draggable divider (Qt's QSplitter / GTK's GtkPaned).
+Add children to @racket[(send sv get-first)] and @racket[(send sv get-second)];
+the divider is mouse-draggable; @racket[set-fraction] sets the first pane's
+share in @racket[0..1].
+
+@racketblock[
+(new split-view% [parent f] [orientation 'horizontal] [fraction 0.4])
+]
+
+@subsection[#:tag "toolbar"]{toolbar%}
+
+A fixed-height row of action buttons with separators. Callbacks are
+no-argument thunks; any other widget can be added with @racket[[parent tb]].
+
+@racketblock[
+(send tb add-button "Open" (λ () ...))
+(send tb add-separator)
+]
+
+@subsection[#:tag "search-field"]{search-field%}
+
+A ``Search…'' box firing a one-argument @racket[(λ (query) ...)] callback on
+every keystroke and on clear.
+
+@racketblock[
+(new search-field% [parent f] [callback (λ (q) (filter-items q))])
+]
+
+@subsection[#:tag "stack"]{stack%}
+
+Shows one of several pages at a time (QStackedWidget). Pair it with a
+@racket[choice%] or @racket[tab-panel%] for working switched content; this
+sidesteps the @racket[tab-panel%]-has-no-callback trap.
+
+@racketblock[
+(define pages (new stack% [parent f]))
+(define p0 (send pages add-page))
+(send pages show-page 0)
+]
+
 @section{Aggregated widgets}
 
 These are re-exported from their upstream packages; see each package's own

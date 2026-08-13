@@ -67,6 +67,10 @@ racket examples/showcase.rkt
 | `image-view%` | `canvas%` exists, but no ready-made widget to just display an image (fit / fixed scale) |
 | `progress-dialog%` | no modal "Working… / Cancel" dialog for long tasks (core has `gauge%` only) |
 | `log-view%` | no scrolling, read-only, auto-scroll log/console; raw `editor-canvas%` + `text%` traps users on stretch & auto-scroll |
+| `split-view%` | no draggable split panes (Qt QSplitter / GTK GtkPaned) |
+| `toolbar%` | no standard action toolbar with separators |
+| `search-field%` | no live "Search…" box (clear + filter-on-type) |
+| `stack%` | no clean page-switcher; also de-traps `tab-panel%` (no callback) |
 
 ### Convenience wrappers (new, MIT)
 
@@ -92,7 +96,7 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 
 | Example | Demonstrates |
 |---------|--------------|
-| `showcase.rkt` | everything, in one gallery window |
+| `showcase.rkt` | a gallery tour of the core widgets |
 | `mini-task-list.rkt` | a realistic small app combining several widgets — clone this |
 | `status-bar-demo.rkt` | `status-bar%` |
 | `spinner-demo.rkt` | `spinner%` |
@@ -107,6 +111,10 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 | `image-view-demo.rkt` | `image-view%` (display a bitmap) |
 | `progress-dialog-demo.rkt` | `progress-dialog%` (modal progress + cancel) |
 | `log-view-demo.rkt` | `log-view%` (scrolling log, flashing-tool style) |
+| `split-view-demo.rkt` | `split-view%` (draggable divider) |
+| `toolbar-demo.rkt` | `toolbar%` (toolbar driving a log) |
+| `search-field-demo.rkt` | `search-field%` (live list filter) |
+| `stack-demo.rkt` | `stack%` (switch pages via a choice%) |
 
 ```bash
 racket examples/status-bar-demo.rkt   # any of them

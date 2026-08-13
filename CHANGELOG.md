@@ -4,6 +4,20 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.5.0] — 2026-08-13
+
+### Added — gap-filling widgets
+- `split-view%` — two panes with a draggable divider (Qt QSplitter / GTK GtkPaned).
+- `toolbar%` — fixed-height row of action buttons with separators.
+- `search-field%` — live "Search…" box with a clear button.
+- `stack%` — a page-switcher (QStackedWidget); also de-traps `tab-panel%`.
+
+### Added — footguns
+- Custom panel layout: the child-info passed to `place-children` /
+  `container-size` is a 4-element `(min-width min-height stretchable-width
+  stretchable-height)`; force a relayout with `change-children`; screen
+  coordinates are `client->screen` (not `client-to-screen`).
+
 ## [0.4.0] — 2026-08-13
 
 ### Added — gap-filling widgets

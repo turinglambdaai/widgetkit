@@ -67,6 +67,10 @@ racket examples/showcase.rkt
 | `image-view%` | 有 `canvas%`，但没有现成控件直接显示一张图片（fit / 固定缩放） |
 | `progress-dialog%` | 没有长任务用的模态"处理中… / 取消"对话框（core 只有 `gauge%`） |
 | `log-view%` | 没有可滚动、只读、自动滚到底的日志/控制台；手搓 `editor-canvas%`+`text%` 卡在伸缩与自动滚动 |
+| `split-view%` | 没有可拖拽分栏（Qt QSplitter / GTK GtkPaned） |
+| `toolbar%` | 没有标准动作工具栏（带分隔） |
+| `search-field%` | 没有实时"搜索…"框（清除 + 边输边过滤） |
+| `stack%` | 没有干净的页面切换；顺带解决 `tab-panel%` 无回调的坑 |
 
 ### 便捷包装（新写，MIT）
 
@@ -92,7 +96,7 @@ racket examples/showcase.rkt
 
 | 示例 | 演示 |
 |------|------|
-| `showcase.rkt` | 全部控件，一个画廊窗口 |
+| `showcase.rkt` | 核心控件画廊巡览 |
 | `mini-task-list.rkt` | 组合多控件的真实小应用——可直接克隆 |
 | `status-bar-demo.rkt` | `status-bar%` |
 | `spinner-demo.rkt` | `spinner%` |
@@ -107,6 +111,10 @@ racket examples/showcase.rkt
 | `image-view-demo.rkt` | `image-view%`（显示图片） |
 | `progress-dialog-demo.rkt` | `progress-dialog%`（模态进度 + 取消） |
 | `log-view-demo.rkt` | `log-view%`（滚动日志，刷写工具风格） |
+| `split-view-demo.rkt` | `split-view%`（可拖拽分栏） |
+| `toolbar-demo.rkt` | `toolbar%`（工具栏驱动日志） |
+| `search-field-demo.rkt` | `search-field%`（列表实时过滤） |
+| `stack-demo.rkt` | `stack%`（用 choice% 切换页面） |
 
 ```bash
 racket examples/status-bar-demo.rkt   # 任选一个
