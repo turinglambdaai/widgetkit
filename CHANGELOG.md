@@ -4,6 +4,19 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.4.0] — 2026-08-13
+
+### Added — gap-filling widgets
+- `log-view%` — a scrolling, read-only, monospace log/console that stretches to
+  fill its parent, auto-scrolls on append, and trims old lines past a cap.
+  Directly addresses the "build a flashing-tool log panel" use case that is
+  painful to assemble from raw `editor-canvas%` + `text%`.
+
+### Added — footguns
+- Stretchability rule: a widget only resizes with the window if it is
+  stretchable AND its parent stretches children (`pane%` and `group-panel%` do
+  not stretch children — use a `panel%`/`horizontal-panel%`/`vertical-panel%`).
+
 ## [0.3.0] — 2026-08-13
 
 ### Added — gap-filling widgets

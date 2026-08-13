@@ -34,6 +34,7 @@
 (check-true (class? disclosure%)   "disclosure% exported")
 (check-true (class? image-view%)   "image-view% exported")
 (check-true (class? progress-dialog%) "progress-dialog% exported")
+(check-true (class? log-view%)        "log-view% exported")
 (check-true (class? table-panel%)  "table-panel% re-exported")
 (check-true (class? canvas-list%)  "canvas-list% re-exported")
 (check-true (class? date-text-field%) "date-text-field% re-exported")

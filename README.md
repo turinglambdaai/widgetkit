@@ -66,6 +66,7 @@ racket examples/showcase.rkt
 | `disclosure%` | no collapsible / expand-collapse container (the "Advanced options…" pattern) |
 | `image-view%` | `canvas%` exists, but no ready-made widget to just display an image (fit / fixed scale) |
 | `progress-dialog%` | no modal "Working… / Cancel" dialog for long tasks (core has `gauge%` only) |
+| `log-view%` | no scrolling, read-only, auto-scroll log/console; raw `editor-canvas%` + `text%` traps users on stretch & auto-scroll |
 
 ### Convenience wrappers (new, MIT)
 
@@ -105,6 +106,7 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 | `disclosure-demo.rkt` | `disclosure%` (collapsible section) |
 | `image-view-demo.rkt` | `image-view%` (display a bitmap) |
 | `progress-dialog-demo.rkt` | `progress-dialog%` (modal progress + cancel) |
+| `log-view-demo.rkt` | `log-view%` (scrolling log, flashing-tool style) |
 
 ```bash
 racket examples/status-bar-demo.rkt   # any of them

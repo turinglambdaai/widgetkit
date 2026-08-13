@@ -188,6 +188,23 @@ for the full pattern.
 Methods: @racket[(send pd set-progress n)], @racket[(send pd set-message s)],
 @racket[(send pd cancelled?)].
 
+@subsection[#:tag "log-view"]{log-view%}
+
+A scrolling, read-only, monospace log/console output that stretches to fill its
+parent, auto-scrolls to the newest line, accepts @racket[append-line] while
+staying read-only, and trims old lines past @racket[max-lines]. Building this
+from raw @racket[editor-canvas%] + @racket[text%] is where most people get
+stuck (the canvas does not stretch inside a @racket[pane%]; auto-scroll and
+read-only-with-programmatic-appends both need care).
+
+@racketblock[
+(define log (new log-view% [parent f] [max-lines 5000]))
+(send log append-line "[boot] ready")
+]
+
+Methods: @racket[(send log append-line s)], @racket[(send log clear)],
+@racket[(send log get-text)], @racket[(send log scroll-to-bottom)].
+
 @section{Aggregated widgets}
 
 These are re-exported from their upstream packages; see each package's own

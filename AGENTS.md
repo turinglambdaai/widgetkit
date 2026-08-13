@@ -64,6 +64,7 @@ A curated collection of GUI widgets for Racket. Two rules:
 | Display an image (fit or fixed scale) | `image-view%` | `(new image-view% [parent f] [bitmap bmp] [scale 'fit])` or `(send iv load-file "x.png")` |
 | Bottom status bar (+ optional progress) | `status-bar%` | `(new status-bar% [parent f] [show-progress #t] [initial-message "Ready."])` |
 | Modal "Working… / Cancel" dialog | `progress-dialog%` | `(new progress-dialog% [parent f] [label "..."])`; drive from a thread + `queue-callback`, see `examples/progress-dialog-demo.rkt` |
+| Scrolling log / console output | `log-view%` | `(new log-view% [parent f] [max-lines 5000])`; `(send log append-line "...")` auto-scrolls |
 | "Busy", unknown duration | `spinner%` | `(new spinner% [parent f] [diameter 28])` then `(send sp start)` / `(send sp stop)` |
 | Compact `[-] value [+]` numeric | `stepper%` | `(new stepper% [parent f] [min-value 0] [max-value 20] [initial 5])` |
 | Collapsible ("Advanced…") section | `disclosure%` | `(new disclosure% [parent f] [label "Advanced"] [expanded? #f])` — add children to `(send d get-content)` |
@@ -96,6 +97,13 @@ otherwise copy:
 - **`message%` grows to fit its label.** For a status bar use `min-width` +
   `stretchable-width #t` so long text is clipped instead of stretching the
   window.
+- **A widget only resizes with the window if it is stretchable AND its parent
+  stretches children.** `editor-canvas%`, `canvas%` and `panel%` default to
+  stretchable, but `pane%` and `group-panel%` do NOT stretch their children
+  (they use natural size) — a resizing area placed in one will not grow. Put it
+  in a `horizontal-panel%`/`vertical-panel%`, or set
+  `(send w stretchable-width/height #t)`. `log-view%` and `image-view%`
+  stretch by default.
 - **`tab-panel%` tabs are visual only.** There is **no per-instance selection
   callback**, and `on-new-tab` is **not augmentable**. To switch pages, drive it
   from a `choice%`, or augment `on-new-request`. The tabs do not hide/show

@@ -2,7 +2,7 @@
 
 (define collection "widgetkit")
 (define scribblings '(("widgetkit.scrbl" ())))
-(define version "0.3.0")
+(define version "0.4.0")
 (define pkg-desc "A curated collection of GUI widgets for Racket")
 (define pkg-authors '("jrtxio"))
 (define license 'MIT)

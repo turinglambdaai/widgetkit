@@ -80,6 +80,10 @@
 (send bdc draw-text "widgetkit" 16 40)
 (send bdc set-bitmap #f)
 (new image-view% [parent p-feedback] [bitmap bmp] [scale 'fit] [min-height 120])
+(section p-feedback "log-view% — scrolling log (auto-scrolls on append)")
+(define showcase-log (new log-view% [parent p-feedback] [min-height 100]))
+(new button% [parent p-feedback] [label "Append a log line"]
+     [callback (λ (_b _e) (send showcase-log append-line (format "event @ ~a ms" (current-inexact-milliseconds))))])
 (section p-feedback "status-bar% — see the bottom of this window (with progress gauge)")
 
 ;; --- Status bar (bottom) --------------------------------------------------
