@@ -5,7 +5,7 @@
                      widgetkit))
 
 @title{widgetkit}
-@author{jrtxio}
+@author{turinglambdaai}
 
 @defmodule[widgetkit]
 

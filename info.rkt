@@ -4,7 +4,7 @@
 (define scribblings '(("widgetkit.scrbl" ())))
 (define version "0.7.1")
 (define pkg-desc "A curated collection of GUI widgets for Racket")
-(define pkg-authors '("jrtxio"))
+(define pkg-authors '("turinglambdaai"))
 (define license 'MIT)
 (define pkg-homepage "https://github.com/turinglambdaai/widgetkit")
 

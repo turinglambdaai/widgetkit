@@ -1,5 +1,5 @@
 ;; SPDX-License-Identifier: MIT
-;; Copyright (c) 2026 jrtxio <jirentianxiang1024@gmail.com>
+;; Copyright (c) 2026 turinglambdaai <jirentianxiang1024@gmail.com>
 ;; See LICENSE at the repository root for full terms.
 
 #lang racket/base
