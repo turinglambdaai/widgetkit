@@ -6,6 +6,7 @@
 (define pkg-desc "A curated collection of GUI widgets for Racket")
 (define pkg-authors '("jrtxio"))
 (define license 'MIT)
+(define pkg-homepage "https://github.com/turinglambdaai/widgetkit")
 
 ;; Core language + the toolkit this collection builds upon.
 ;; The four aggregated widgets are pulled in as ordinary dependencies, so a
