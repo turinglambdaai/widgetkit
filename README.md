@@ -91,6 +91,7 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 | Example | Demonstrates |
 |---------|--------------|
 | `showcase.rkt` | everything, in one gallery window |
+| `mini-task-list.rkt` | a realistic small app combining several widgets — clone this |
 | `status-bar-demo.rkt` | `status-bar%` |
 | `spinner-demo.rkt` | `spinner%` |
 | `stepper-demo.rkt` | `stepper%` |

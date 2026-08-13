@@ -4,6 +4,33 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.2.0] — 2026-08-13
+
+### Added — gap-filling widgets
+- `disclosure%` — collapsible section (the "Advanced options…" pattern).
+- `image-view%` — display a bitmap, fit-to-view or at a fixed scale.
+
+### Added — consistency wrappers
+- `labeled-field%` — `text-field%` with cue + tooltip baked in (hides the
+  `cue-mixin` 2-argument footgun).
+- `text-list%` — `canvas-list%` with a one-argument action callback.
+
+### Added — agent-friendliness
+- `AGENTS.md`: an intent-first single-file reference, a core `racket/gui`
+  "don't reinvent" table, and a footguns list (`button%` 2-arg callback,
+  `gauge%` uses `min-width`, `tab-panel%` has no selection callback,
+  `cue-mixin` is 2-arg, `canvas-list%` 3-arg callbacks, `bitmap%` via
+  `make-object`, class errors surface only at load, etc.).
+- `test/smoke-examples.sh` (and CI) actually launches every example, catching
+  runtime errors that `raco make` cannot.
+- `examples/mini-task-list.rkt` — a realistic small app combining several
+  widgets, as a cloneable starting point.
+
+### Changed
+- `status-bar-demo` drives progress from a timer instead of blocking with
+  `sleep`.
+- `showcase.rkt` now demonstrates every widget.
+
 ## [0.1.0] — 2026-08-12
 
 First release. A curated collection of GUI widgets for Racket, gathered behind

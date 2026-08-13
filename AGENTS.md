@@ -161,6 +161,10 @@ callback arity or a missing method — run it before considering GUI code done.
 (send f show #t)
 ```
 
+For a fuller, realistic example combining several widgets (`table-panel%`,
+`labeled-field%`, `text-list%`, `disclosure%`, `status-bar%`), see
+`examples/mini-task-list.rkt` — clone it as the starting point for a real app.
+
 ## Extending widgetkit
 
 See `CONTRIBUTING.md`. The bar: it must fill a real gap core `racket/gui` leaves

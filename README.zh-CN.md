@@ -91,6 +91,7 @@ racket examples/showcase.rkt
 | 示例 | 演示 |
 |------|------|
 | `showcase.rkt` | 全部控件，一个画廊窗口 |
+| `mini-task-list.rkt` | 组合多控件的真实小应用——可直接克隆 |
 | `status-bar-demo.rkt` | `status-bar%` |
 | `spinner-demo.rkt` | `spinner%` |
 | `stepper-demo.rkt` | `stepper%` |
