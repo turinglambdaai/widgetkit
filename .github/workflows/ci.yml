@@ -23,6 +23,12 @@ jobs:
         with:
           version: stable
 
+      # racket/gui initializes Gtk when required, so even logic tests need a
+      # display on Linux. Install Xvfb before any test runs.
+      - name: Install xvfb (Linux only)
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y xvfb
+
       - name: Install package and dependencies
         # raco pkg install rejects "." as a source (ending path element must be
         # a package name); the checkout directory name IS the package name.
@@ -36,16 +42,12 @@ jobs:
         run: bash test/check-fmt.sh
 
       - name: Compile
-        # Compiling GUI modules does not open a display, so this is safe headless.
         run: raco make main.rkt examples/*.rkt
 
-      - name: Test
-        # Logic tests only; they do not instantiate any window.
-        run: raco test test/run.rkt
-
-      - name: Install xvfb (Linux only)
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y xvfb
+      - name: Test (logic + contracts)
+        env:
+          RUNNER_OS: ${{ runner.os }}
+        run: bash test/run-pure.sh
 
       - name: Smoke-test that every example launches
         # Catches runtime errors raco make cannot (bad callback arity, missing
