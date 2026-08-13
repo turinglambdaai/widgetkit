@@ -61,9 +61,11 @@ A curated collection of GUI widgets for Racket. Two rules:
 | Date input (dd.mm.yyyy) | `date-text-field%` | `(new date-text-field% [parent f] [label "Date:"])` |
 | Very large list / custom-drawn rows | `canvas-list%` | `(new canvas-list% [parent f] [items (vector "a" "b")] [item-height 22] [action-callback (λ (c item e) (void))])` |
 | Big list of strings, simple pick action | `text-list%` | `(new text-list% [parent f] [items (vector "a" "b")] [action (λ (item) (void))])` |
+| Display an image (fit or fixed scale) | `image-view%` | `(new image-view% [parent f] [bitmap bmp] [scale 'fit])` or `(send iv load-file "x.png")` |
 | Bottom status bar (+ optional progress) | `status-bar%` | `(new status-bar% [parent f] [show-progress #t] [initial-message "Ready."])` |
 | "Busy", unknown duration | `spinner%` | `(new spinner% [parent f] [diameter 28])` then `(send sp start)` / `(send sp stop)` |
 | Compact `[-] value [+]` numeric | `stepper%` | `(new stepper% [parent f] [min-value 0] [max-value 20] [initial 5])` |
+| Collapsible ("Advanced…") section | `disclosure%` | `(new disclosure% [parent f] [label "Advanced"] [expanded? #f])` — add children to `(send d get-content)` |
 
 Each has a standalone demo in `examples/` — copy it as a starting point.
 
@@ -88,6 +90,8 @@ otherwise copy:
   The arity is checked at construction, so `(new button% [callback (λ (_) ...)])`
   throws immediately.
 - **`gauge%` has no `width` init field.** Use `min-width` to fix its size.
+- **`bitmap%` has no `width`/`height` init field.** Create one positionally with
+  `(make-object bitmap% w h)`, not `(new bitmap% [width w] [height h])`.
 - **`message%` grows to fit its label.** For a status bar use `min-width` +
   `stretchable-width #t` so long text is clipped instead of stretching the
   window.

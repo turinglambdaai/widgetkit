@@ -47,13 +47,17 @@ SOFTWARE.
          "private/spinner.rkt"
          "private/stepper.rkt"
          "private/labeled-field.rkt"
-         "private/text-list.rkt")
+         "private/text-list.rkt"
+         "private/disclosure.rkt"
+         "private/image-view.rkt")
 
 (provide (all-from-out "private/status-bar.rkt")
          (all-from-out "private/spinner.rkt")
          (all-from-out "private/stepper.rkt")
          (all-from-out "private/labeled-field.rkt")
-         (all-from-out "private/text-list.rkt"))
+         (all-from-out "private/text-list.rkt")
+         (all-from-out "private/disclosure.rkt")
+         (all-from-out "private/image-view.rkt"))
 
 ;; ---------------------------------------------------------------------------
 ;; Layer 2 — aggregated widgets (maintained upstream, re-exported here)

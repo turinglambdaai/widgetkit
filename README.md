@@ -63,6 +63,8 @@ racket examples/showcase.rkt
 | `status-bar%` | `message%` + `gauge%` exist, but there's no ready-made status bar with text + progress |
 | `spinner%` | only the determinate `gauge%` ships; no "busy, unknown duration" indicator |
 | `stepper%` | `slider%` covers ranges, but there's no compact `[-] value [+]` numeric stepper |
+| `disclosure%` | no collapsible / expand-collapse container (the "Advanced options…" pattern) |
+| `image-view%` | `canvas%` exists, but no ready-made widget to just display an image (fit / fixed scale) |
 
 ### Convenience wrappers (new, MIT)
 
@@ -98,6 +100,8 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 | `date-input-demo.rkt` | `date-text-field%` |
 | `labeled-field-demo.rkt` | `labeled-field%` (cue + tooltip convenience) |
 | `text-list-demo.rkt` | `text-list%` (simple-action list) |
+| `disclosure-demo.rkt` | `disclosure%` (collapsible section) |
+| `image-view-demo.rkt` | `image-view%` (display a bitmap) |
 
 ```bash
 racket examples/status-bar-demo.rkt   # any of them

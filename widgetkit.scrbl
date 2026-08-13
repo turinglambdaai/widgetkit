@@ -140,6 +140,34 @@ to @racket[[min-value, max-value]] using the exported @racket[clamp] helper.
      [callback (λ (self) (printf "qty: ~a\n" (send self get-value)))])
 ]
 
+@subsection[#:tag "disclosure"]{disclosure%}
+
+A collapsible section: a header button toggles the visibility of a content
+panel. Add the collapsible children to the panel returned by @racket[get-content].
+
+@racketblock[
+(define d (new disclosure% [parent f] [label "Advanced options"] [expanded? #f]))
+(new check-box% [parent (send d get-content)] [label "Verbose logging"])
+]
+
+Methods: @racket[(send d get-content)], @racket[(send d is-expanded?)],
+@racket[(send d set-expanded! bool)].
+
+@subsection[#:tag "image-view"]{image-view%}
+
+A canvas that displays a @racket[bitmap%], centered and scaled to fit (or at a
+fixed numeric scale). core @racket[gui] has @racket[canvas%] but no ready-made
+widget to just show an image.
+
+@racketblock[
+(new image-view% [parent f] [bitmap some-bitmap%] [scale 'fit])
+(define iv (new image-view% [parent f]))
+(send iv load-file "photo.png")
+]
+
+Methods: @racket[(send iv set-bitmap b)], @racket[(send iv load-file path)],
+@racket[(send iv get-bitmap)].
+
 @section{Aggregated widgets}
 
 These are re-exported from their upstream packages; see each package's own

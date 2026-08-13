@@ -31,6 +31,8 @@
 (check-true (class? status-bar%)   "status-bar% exported")
 (check-true (class? spinner%)      "spinner% exported")
 (check-true (class? stepper%)      "stepper% exported")
+(check-true (class? disclosure%)   "disclosure% exported")
+(check-true (class? image-view%)   "image-view% exported")
 (check-true (class? table-panel%)  "table-panel% re-exported")
 (check-true (class? canvas-list%)  "canvas-list% re-exported")
 (check-true (class? date-text-field%) "date-text-field% re-exported")
