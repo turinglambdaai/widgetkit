@@ -22,14 +22,9 @@
 ;;   (new search-field% [parent f] [callback (lambda (q) (filter-items q))])
 (define search-field%
   (class horizontal-panel%
-    (init-field [label #f]
-                [cue "Search…"]
-                [callback (λ (text) (void))])
+    (init-field [label #f] [cue "Search…"] [callback (λ (text) (void))])
 
-    (super-new
-     [alignment '(left center)]
-     [stretchable-height #f]
-     [spacing 2])
+    (super-new [alignment '(left center)] [stretchable-height #f] [spacing 2])
 
     (define field
       (new labeled-field%
@@ -41,7 +36,10 @@
     (new button%
          [parent this]
          [label "×"]
-         [callback (λ (_b _e) (send field set-value "") (callback ""))])
+         [callback
+          (λ (_b _e)
+            (send field set-value "")
+            (callback ""))])
 
     ;; The current query text.
     (define/public (get-text) (send field get-value))

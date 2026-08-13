@@ -4,6 +4,12 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.6.1] — 2026-08-13
+
+### Changed — craft
+- All Racket source is now `raco fmt` clean (width 102), matching the official
+  formatter. CI enforces it via `test/check-fmt.sh`.
+
 ## [0.6.0] — 2026-08-13
 
 ### Changed — API quality

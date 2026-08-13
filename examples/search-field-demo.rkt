@@ -6,17 +6,17 @@
          racket/string
          widgetkit)
 
-(define all-items (for/list ([i (in-range 1 41)]) (format "item ~a" i)))
+(define all-items
+  (for/list ([i (in-range 1 41)])
+    (format "item ~a" i)))
 
-(define f (new frame% [label "search-field% demo"] [width 320] [height 380]
-               [alignment '(left top)]))
+(define f (new frame% [label "search-field% demo"] [width 320] [height 380] [alignment '(left top)]))
 
 (define lst
   (new text-list% [parent f] [items (list->vector all-items)] [item-height 22] [min-height 280]))
 
 ;; The callback fires on every keystroke with the current query.
-(new search-field% [parent f]
-     [callback (λ (q) (refresh q))])
+(new search-field% [parent f] [callback (λ (q) (refresh q))])
 
 (define (refresh q)
   (define needle (string-downcase (string-trim q)))

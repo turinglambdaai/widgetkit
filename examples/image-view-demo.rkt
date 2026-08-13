@@ -6,8 +6,8 @@
          racket/draw
          widgetkit)
 
-(define f (new frame% [label "image-view% demo"] [width 420] [height 280]
-               [alignment '(center center)]))
+(define f
+  (new frame% [label "image-view% demo"] [width 420] [height 280] [alignment '(center center)]))
 
 ;; Build a bitmap in memory so the example is self-contained (no asset file).
 (define bmp (make-object bitmap% 240 140))

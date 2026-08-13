@@ -26,6 +26,13 @@ jobs:
       - name: Install package and dependencies
         run: raco pkg install --auto --no-docs .
 
+      - name: Install formatter
+        run: raco pkg install --auto --no-docs fmt
+
+      - name: Check formatting
+        # Fail if any file is not raco-fmt clean.
+        run: bash test/check-fmt.sh
+
       - name: Compile
         # Compiling GUI modules does not open a display, so this is safe headless.
         run: raco make main.rkt examples/*.rkt

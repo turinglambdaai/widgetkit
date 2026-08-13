@@ -24,36 +24,45 @@
 ;;   (send log append-line "[boot] ready")
 (define log-view%
   (class editor-canvas%
-    (init-field [max-lines 10000]
-                [monospace? #t]
-                [wrap? #t]
-                [read-only? #t])
+    (init-field [max-lines 10000] [monospace? #t] [wrap? #t] [read-only? #t])
 
     ;; Build the editor first (no `this` needed), then hand it to the canvas.
     (define editor (new text%))
     (send editor auto-wrap wrap?)
 
-    (super-new
-     [editor editor]
-     [style (if wrap? '(no-hscroll) '())])
+    (super-new [editor editor]
+               [style
+                (if wrap?
+                    '(no-hscroll)
+                    '())])
     ;; editor-canvas% defaults to stretchable in both dimensions, so log-view%
-     ;; fills its parent automatically. Callers can still override min-width,
-     ;; min-height, stretchable-*, etc. via the usual init fields.
+    ;; fills its parent automatically. Callers can still override min-width,
+    ;; min-height, stretchable-*, etc. via the usual init fields.
 
-    (define mono-delta
-      (and monospace? (make-object style-delta% 'change-family 'modern)))
+    (define mono-delta (and monospace? (make-object style-delta% 'change-family 'modern)))
 
     ;; A read-only lock also blocks programmatic edits, so toggle it around
     ;; each mutation.
-    (when read-only? (send editor lock #t))
-    (define (unlock!) (when read-only? (send editor lock #f)))
-    (define (relock!) (when read-only? (send editor lock #t)))
+    (when read-only?
+      (send editor lock #t))
+    (define (unlock!)
+      (when read-only?
+        (send editor lock #f)))
+    (define (relock!)
+      (when read-only?
+        (send editor lock #t)))
 
     ;; Append a line of text (a trailing newline is ensured) and scroll to it.
     ;; Non-strings are formatted with ~a.
     (define/public (append-line line)
-      (define s (if (string? line) line (format "~a" line)))
-      (define text (if (string-suffix? s "\n") s (string-append s "\n")))
+      (define s
+        (if (string? line)
+            line
+            (format "~a" line)))
+      (define text
+        (if (string-suffix? s "\n")
+            s
+            (string-append s "\n")))
       (unlock!)
       (define start (send editor last-position))
       (send editor insert text start)
@@ -76,9 +85,7 @@
       (relock!))
 
     ;; All log text as a string.
-    (define/public (get-text)
-      (send editor get-text))
+    (define/public (get-text) (send editor get-text))
 
     ;; Scroll so the most recent line is visible.
-    (define/public (scroll-to-bottom)
-      (send editor scroll-to-position (send editor last-position)))))
+    (define/public (scroll-to-bottom) (send editor scroll-to-position (send editor last-position)))))

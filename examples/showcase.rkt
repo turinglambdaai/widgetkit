@@ -7,16 +7,19 @@
          racket/draw
          widgetkit)
 
-(define f (new frame% [label "widgetkit — showcase"] [width 600] [height 520]
-               [alignment '(left top)]))
+(define f
+  (new frame% [label "widgetkit — showcase"] [width 600] [height 520] [alignment '(left top)]))
 
 ;; A dropdown picks which page is visible.
 (define pages #f)
 (define (show-only i)
-  (for ([p (vector->list pages)] [j (in-naturals)])
+  (for ([p (vector->list pages)]
+        [j (in-naturals)])
     (send p show (= i j))))
 (define selector
-  (new choice% [parent f] [label "View:"]
+  (new choice%
+       [parent f]
+       [label "View:"]
        [choices '("Inputs" "Lists" "Layout" "Feedback")]
        [callback (λ (c e) (show-only (send c get-selection)))]))
 
@@ -27,11 +30,22 @@
 (define p-inputs (new vertical-panel% [parent f] [alignment '(left top)] [spacing 8]))
 (section p-inputs "cue-mixin + tooltip-mixin (raw composition)")
 (new (cue-mixin "" (tooltip-mixin text-field%))
-     [parent p-inputs] [label "Name:"] [cue "Enter your name"] [tooltip "Your full name"])
+     [parent p-inputs]
+     [label "Name:"]
+     [cue "Enter your name"]
+     [tooltip "Your full name"])
 (section p-inputs "labeled-field% (same thing, one consistent class)")
-(new labeled-field% [parent p-inputs] [label "Email:"] [cue "you@example.com"] [tooltip "We never share this"])
+(new labeled-field%
+     [parent p-inputs]
+     [label "Email:"]
+     [cue "you@example.com"]
+     [tooltip "We never share this"])
 (section p-inputs "stepper%")
-(new stepper% [parent p-inputs] [min-value 0] [max-value 20] [initial 5]
+(new stepper%
+     [parent p-inputs]
+     [min-value 0]
+     [max-value 20]
+     [initial 5]
      [callback (λ (self) (printf "stepper -> ~a\n" (send self get-value)))])
 (section p-inputs "date-text-field%  (dd.mm.yyyy)")
 (new date-text-field% [parent p-inputs] [label "Date:"])
@@ -41,7 +55,9 @@
 (section p-lists "canvas-list% — 1999 virtual items, only visible rows rendered")
 (new canvas-list%
      [parent p-lists]
-     [items (for/vector ([i (in-range 1 2000)]) (format "Item ~a" i))]
+     [items
+      (for/vector ([i (in-range 1 2000)])
+        (format "Item ~a" i))]
      [item-height 20]
      [min-height 180]
      [action-callback (λ (cl item event) (printf "canvas-list picked: ~a\n" item))])
@@ -69,8 +85,14 @@
 (define p-feedback (new vertical-panel% [parent f] [alignment '(left top)] [spacing 10]))
 (section p-feedback "spinner% — indeterminate activity indicator")
 (define sp (new spinner% [parent p-feedback] [diameter 36]))
-(new button% [parent p-feedback] [label "start / stop spinner"]
-     [callback (λ (_b _e) (if (send sp spinning?) (send sp stop) (send sp start)))])
+(new button%
+     [parent p-feedback]
+     [label "start / stop spinner"]
+     [callback
+      (λ (_b _e)
+        (if (send sp spinning?)
+            (send sp stop)
+            (send sp start)))])
 (section p-feedback "image-view% — display a bitmap, fit to view")
 (define bmp (make-object bitmap% 200 110))
 (define bdc (new bitmap-dc% [bitmap bmp]))
@@ -82,13 +104,20 @@
 (new image-view% [parent p-feedback] [bitmap bmp] [scale 'fit] [min-height 120])
 (section p-feedback "log-view% — scrolling log (auto-scrolls on append)")
 (define showcase-log (new log-view% [parent p-feedback] [min-height 100]))
-(new button% [parent p-feedback] [label "Append a log line"]
-     [callback (λ (_b _e) (send showcase-log append-line (format "event @ ~a ms" (current-inexact-milliseconds))))])
+(new button%
+     [parent p-feedback]
+     [label "Append a log line"]
+     [callback
+      (λ (_b _e)
+        (send showcase-log append-line (format "event @ ~a ms" (current-inexact-milliseconds))))])
 (section p-feedback "status-bar% — see the bottom of this window (with progress gauge)")
 
 ;; --- Status bar (bottom) --------------------------------------------------
-(define bar (new status-bar% [parent f] [show-progress #t]
-                 [initial-message "Every widgetkit widget is shown here."]))
+(define bar
+  (new status-bar%
+       [parent f]
+       [show-progress #t]
+       [initial-message "Every widgetkit widget is shown here."]))
 
 (set! pages (vector p-inputs p-lists p-layout p-feedback))
 (show-only 0)

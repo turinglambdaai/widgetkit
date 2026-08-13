@@ -22,31 +22,18 @@
     (init [initial-message ""]
           [show-progress #f])
 
-    (super-new
-     [alignment '(left center)]
-     [stretchable-height #f]
-     [spacing 8]
-     [border 0])
+    (super-new [alignment '(left center)] [stretchable-height #f] [spacing 8] [border 0])
 
     ;; The status text. Fixed min-width + stretchable-width means long messages
     ;; are clipped by the panel rather than forcing the window to grow.
     (define status-message
-      (new message%
-           [parent this]
-           [label initial-message]
-           [min-width 240]
-           [stretchable-width #t]))
+      (new message% [parent this] [label initial-message] [min-width 240] [stretchable-width #t]))
 
     ;; Optional determinate gauge (0..100). Only created on demand so a
     ;; plain-text status bar pays no progress cost.
     (define progress-gauge
       (and show-progress
-           (new gauge%
-                [parent this]
-                [label #f]
-                [range 100]
-                [min-width 140]
-                [stretchable-width #f])))
+           (new gauge% [parent this] [label #f] [range 100] [min-width 140] [stretchable-width #f])))
 
     ;; Set the status text.
     (define/public (set-message text)
@@ -60,14 +47,13 @@
       (unless (and (real? percentage) (<= 0 percentage 100))
         (raise-argument-error 'status-bar.set-progress "real? in [0, 100]" percentage))
       (when progress-gauge
-        (send progress-gauge set-value
-              (inexact->exact (floor (min 100 (max 0 percentage)))))))
+        (send progress-gauge set-value (inexact->exact (floor (min 100 (max 0 percentage)))))))
 
     ;; Current status text.
-    (define/public (get-message)
-      (send status-message get-label))
+    (define/public (get-message) (send status-message get-label))
 
     ;; Reset to an empty message and zero progress.
     (define/public (clear)
       (send status-message set-label "")
-      (when progress-gauge (send progress-gauge set-value 0)))))
+      (when progress-gauge
+        (send progress-gauge set-value 0)))))

@@ -31,18 +31,11 @@
   (class horizontal-panel%
     (init [alignment '(left center)])
 
-    (super-new
-     [alignment alignment]
-     [stretchable-height #f]
-     [spacing 4]
-     [border 2])
+    (super-new [alignment alignment] [stretchable-height #f] [spacing 4] [border 2])
 
     ;; Add a button whose callback is a no-argument thunk.
     (define/public (add-button label cb)
-      (new button%
-           [parent this]
-           [label label]
-           [callback (λ (_b _e) (cb))]))
+      (new button% [parent this] [label label] [callback (λ (_b _e) (cb))]))
 
     ;; Add a thin vertical separator between groups of actions.
     (define/public (add-separator)

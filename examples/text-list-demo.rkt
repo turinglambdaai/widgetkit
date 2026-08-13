@@ -11,7 +11,9 @@
 ;; that canvas-list% itself requires.
 (new text-list%
      [parent f]
-     [items (for/vector ([i (in-range 1 1000)]) (format "Item ~a" i))]
+     [items
+      (for/vector ([i (in-range 1 1000)])
+        (format "Item ~a" i))]
      [item-height 22]
      [action (λ (item) (printf "picked: ~a\n" item))])
 

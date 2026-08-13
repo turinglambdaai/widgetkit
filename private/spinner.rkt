@@ -22,15 +22,16 @@
     (init-field [diameter 24]
                 [color "dodgerblue"]
                 [track-color "lightgray"]
-                [interval 60])                 ; milliseconds per frame
+                [interval 60]) ; milliseconds per frame
 
-    (super-new
-     [min-width diameter]
-     [min-height diameter]
-     [stretchable-width #f]
-     [stretchable-height #f])
+    (super-new [min-width diameter]
+               [min-height diameter]
+               [stretchable-width #f]
+               [stretchable-height #f])
 
-    (inherit get-dc get-client-size refresh)
+    (inherit get-dc
+             get-client-size
+             refresh)
 
     ;; Pens are built once from the fixed diameter (the spinner is non-resizable).
     (define line-width (max 2.0 (/ diameter 5.0)))
@@ -43,7 +44,10 @@
     (define timer #f)
 
     ;; One animation step: advance the angle and repaint.
-    (define tick (λ () (set! angle (+ angle 0.35)) (refresh)))
+    (define tick
+      (λ ()
+        (set! angle (+ angle 0.35))
+        (refresh)))
 
     ;; Begin spinning. Idempotent.
     (define/public (start)
@@ -56,7 +60,8 @@
 
     ;; Stop spinning. Idempotent.
     (define/public (stop)
-      (when timer (send timer stop))
+      (when timer
+        (send timer stop))
       (set! running? #f)
       (refresh))
 
@@ -79,8 +84,6 @@
       (when running?
         (send dc set-pen arc-pen)
         ;; draw-arc sweeps counter-clockwise from start angle to end angle.
-        (send dc draw-arc (- cx r) (- cy r) (* 2 r) (* 2 r)
-              angle (+ angle (* 2.0 pi 0.83))))
+        (send dc draw-arc (- cx r) (- cy r) (* 2 r) (* 2 r) angle (+ angle (* 2.0 pi 0.83))))
       (send dc set-pen old-pen)
-      (send dc set-brush old-brush))
-    ))
+      (send dc set-brush old-brush))))

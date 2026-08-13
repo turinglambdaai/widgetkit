@@ -6,7 +6,7 @@
 
 (require racket/class
          racket/gui/base
-         gui-widget-mixins)            ; cue-mixin, tooltip-mixin
+         gui-widget-mixins) ; cue-mixin, tooltip-mixin
 
 (provide labeled-field%)
 
@@ -22,5 +22,4 @@
 ;;
 ;;   (new labeled-field% [parent f] [label "Name:"]
 ;;        [cue "Enter your name"] [tooltip "Your full name"])
-(define labeled-field%
-  (cue-mixin "" (tooltip-mixin text-field%)))
+(define labeled-field% (cue-mixin "" (tooltip-mixin text-field%)))

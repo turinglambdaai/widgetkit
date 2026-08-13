@@ -21,27 +21,18 @@
 ;;   (new check-box% [parent (send d get-content)] [label "Verbose logging"])
 (define disclosure%
   (class vertical-panel%
-    (init-field [label "Section"]
-                [expanded? #f]
-                [callback (λ (self) (void))])
+    (init-field [label "Section"] [expanded? #f] [callback (λ (self) (void))])
 
-    (super-new
-     [alignment '(left top)]
-     [stretchable-height #f]
-     [spacing 4])
+    (super-new [alignment '(left top)] [stretchable-height #f] [spacing 4])
 
     (define (header-label)
       (string-append (if expanded? "[-] " "[+] ") label))
 
     (define header
-      (new button%
-           [parent this]
-           [label (header-label)]
-           [callback (λ (_b _e) (toggle!))]))
+      (new button% [parent this] [label (header-label)] [callback (λ (_b _e) (toggle!))]))
 
     ;; Children added here are shown/hidden together when toggling.
-    (define content
-      (new vertical-panel% [parent this] [alignment '(left top)] [spacing 6]))
+    (define content (new vertical-panel% [parent this] [alignment '(left top)] [spacing 6]))
 
     (send content show expanded?)
 
@@ -59,4 +50,5 @@
 
     ;; Expand or collapse the section programmatically.
     (define/public (set-expanded! e)
-      (unless (eq? e expanded?) (toggle!)))))
+      (unless (eq? e expanded?)
+        (toggle!)))))

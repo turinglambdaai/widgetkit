@@ -43,5 +43,6 @@
     (define/public (show-page i)
       (unless (and (exact-nonnegative-integer? i) (< i (length the-pages)))
         (error 'stack.show-page "index out of range: ~a" i))
-      (for ([p the-pages] [j (in-naturals)])
+      (for ([p the-pages]
+            [j (in-naturals)])
         (send p show (= j i))))))

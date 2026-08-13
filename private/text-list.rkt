@@ -6,7 +6,7 @@
 
 (require racket/class
          racket/gui/base
-         canvas-list)                  ; canvas-list%
+         canvas-list) ; canvas-list%
 
 (provide text-list%)
 
@@ -25,5 +25,4 @@
 (define text-list%
   (class canvas-list%
     (init-field [action (λ (item) (void))])
-    (super-new
-     [action-callback (λ (_canvas item _event) (action item))])))
+    (super-new [action-callback (λ (_canvas item _event) (action item))])))

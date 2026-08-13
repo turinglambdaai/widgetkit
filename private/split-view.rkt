@@ -44,21 +44,19 @@
       (define t (send e get-event-type))
       (cond
         [(eq? t 'left-down) (send owner begin-drag sx sy)]
-        [(eq? t 'motion)    (send owner update-drag sx sy)]
-        [(eq? t 'left-up)   (send owner end-drag)]))))
+        [(eq? t 'motion) (send owner update-drag sx sy)]
+        [(eq? t 'left-up) (send owner end-drag)]))))
 
 (define split-view%
   (class panel%
-    (init-field [orientation 'horizontal]
-                [fraction 0.5])
+    (init-field [orientation 'horizontal] [fraction 0.5])
 
     (super-new [border 0] [spacing 0] [alignment '(center center)])
 
     (define sash-thickness 6)
     (define area1 (new panel% [parent this]))
     (define area2 (new panel% [parent this]))
-    (define sash
-      (new sash% [parent this] [owner this] [thickness sash-thickness] [draw draw-sash]))
+    (define sash (new sash% [parent this] [owner this] [thickness sash-thickness] [draw draw-sash]))
 
     ;; --- drag state (screen-space) ---
     (define drag-start-screen #f)
@@ -73,7 +71,10 @@
         (define-values (cw ch) (send this get-client-size))
         (define horizontal? (eq? orientation 'horizontal))
         (define avail (max 1 (- (if horizontal? cw ch) sash-thickness)))
-        (define start (if horizontal? (car drag-start-screen) (cdr drag-start-screen)))
+        (define start
+          (if horizontal?
+              (car drag-start-screen)
+              (cdr drag-start-screen)))
         (define now (if horizontal? sx sy))
         (set-fraction (+ drag-start-frac (/ (- now start) avail)))))
 
@@ -92,28 +93,30 @@
     ;; Children are created in order [area1, area2, sash], so `info` follows
     ;; that order. place-children returns geometry in the same order.
     ;; Each info entry is (min-width min-height stretchable-width stretchable-height).
-    (define (min-w i) (list-ref i 0))
-    (define (min-h i) (list-ref i 1))
+    (define (min-w i)
+      (list-ref i 0))
+    (define (min-h i)
+      (list-ref i 1))
 
     (define/override (container-size info)
       (define a1 (list-ref info 0))
       (define a2 (list-ref info 1))
       (if (eq? orientation 'horizontal)
-          (values (+ (min-w a1) sash-thickness (min-w a2))
-                  (max (min-h a1) (min-h a2)))
-          (values (max (min-w a1) (min-w a2))
-                  (+ (min-h a1) sash-thickness (min-h a2)))))
+          (values (+ (min-w a1) sash-thickness (min-w a2)) (max (min-h a1) (min-h a2)))
+          (values (max (min-w a1) (min-w a2)) (+ (min-h a1) sash-thickness (min-h a2)))))
 
     (define/override (place-children info w h)
       (define horizontal? (eq? orientation 'horizontal))
       (define avail (max 0 (- (if horizontal? w h) sash-thickness)))
       (define a1-size (inexact->exact (round (* fraction avail))))
       (if horizontal?
-          (let ([a1w a1-size] [a2w (max 0 (- avail a1-size))])
+          (let ([a1w a1-size]
+                [a2w (max 0 (- avail a1-size))])
             (list (list 0 0 a1w h)
                   (list (+ a1w sash-thickness) 0 a2w h)
                   (list a1w 0 sash-thickness h)))
-          (let ([a1h a1-size] [a2h (max 0 (- avail a1-size))])
+          (let ([a1h a1-size]
+                [a2h (max 0 (- avail a1-size))])
             (list (list 0 0 w a1h)
                   (list 0 (+ a1h sash-thickness) w a2h)
                   (list 0 a1h w sash-thickness)))))))

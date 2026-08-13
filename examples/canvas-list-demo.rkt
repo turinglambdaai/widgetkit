@@ -11,7 +11,9 @@
 ;; paint-item-callback, each item is drawn as its (format "~a" item) text.
 (new canvas-list%
      [parent f]
-     [items (for/vector ([i (in-range 1 2000)]) (format "Item ~a" i))]
+     [items
+      (for/vector ([i (in-range 1 2000)])
+        (format "Item ~a" i))]
      [item-height 22]
      [action-callback (λ (cl item event) (printf "activated: ~a\n" item))])
 

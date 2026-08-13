@@ -13,7 +13,9 @@
 
 (new text-list%
      [parent (send sv get-first)]
-     [items (for/vector ([i (in-range 1 50)]) (format "item ~a" i))]
+     [items
+      (for/vector ([i (in-range 1 50)])
+        (format "item ~a" i))]
      [item-height 22]
      [action (λ (item) (send log append-line (format "selected: ~a" item)))])
 

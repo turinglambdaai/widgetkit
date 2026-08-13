@@ -5,13 +5,12 @@
          racket/gui/base
          widgetkit)
 
-(define f (new frame% [label "toolbar% demo"] [width 500] [height 300]
-               [alignment '(left top)]))
+(define f (new frame% [label "toolbar% demo"] [width 500] [height 300] [alignment '(left top)]))
 
 (define tb (new toolbar% [parent f]))
 (define log (new log-view% [parent f] [min-height 180]))
 
-(send tb add-button "New"  (λ () (send log append-line "New: untitled")))
+(send tb add-button "New" (λ () (send log append-line "New: untitled")))
 (send tb add-button "Open" (λ () (send log append-line "Open: file dialog")))
 (send tb add-separator)
 (send tb add-button "Quit" (λ () (send f show #f)))

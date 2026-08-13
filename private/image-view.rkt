@@ -21,16 +21,13 @@
 ;;   (define iv (new image-view% [parent f])) (send iv load-file "photo.png")
 (define image-view%
   (class canvas%
-    (init-field [bitmap #f]
-                [scale 'fit])             ; 'fit, or a positive number
+    (init-field [bitmap #f] [scale 'fit]) ; 'fit, or a positive number
 
-    (super-new
-     [min-width 100]
-     [min-height 100]
-     [stretchable-width #t]
-     [stretchable-height #t])
+    (super-new [min-width 100] [min-height 100] [stretchable-width #t] [stretchable-height #t])
 
-    (inherit get-dc get-client-size refresh)
+    (inherit get-dc
+             get-client-size
+             refresh)
 
     (define the-bitmap bitmap)
 
@@ -51,16 +48,16 @@
       (define dc (get-dc))
       (define-values (cw ch) (get-client-size))
       (cond
-        [(or (not the-bitmap) (not (send the-bitmap ok?)))
-         (send dc draw-text "no image" 8 8)]
+        [(or (not the-bitmap) (not (send the-bitmap ok?))) (send dc draw-text "no image" 8 8)]
         [else
          (define bw (send the-bitmap get-width))
          (define bh (send the-bitmap get-height))
-         (define raw-s (if (eq? scale 'fit)
-                           (if (and (> bw 0) (> bh 0) (> cw 0) (> ch 0))
-                               (min (/ cw bw) (/ ch bh))
-                               1.0)
-                           scale))
+         (define raw-s
+           (if (eq? scale 'fit)
+               (if (and (> bw 0) (> bh 0) (> cw 0) (> ch 0))
+                   (min (/ cw bw) (/ ch bh))
+                   1.0)
+               scale))
          (define s (if (and (number? raw-s) (positive? raw-s)) raw-s 1.0))
          (define dw (* bw s))
          (define dh (* bh s))

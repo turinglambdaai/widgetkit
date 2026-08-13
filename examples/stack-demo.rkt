@@ -5,11 +5,12 @@
          racket/gui/base
          widgetkit)
 
-(define f (new frame% [label "stack% demo"] [width 420] [height 260]
-               [alignment '(left top)]))
+(define f (new frame% [label "stack% demo"] [width 420] [height 260] [alignment '(left top)]))
 
 ;; A dropdown drives which stack page is visible.
-(new choice% [parent f] [label "Page:"]
+(new choice%
+     [parent f]
+     [label "Page:"]
      [choices '("One" "Two" "Three")]
      [callback (λ (c _e) (send pages show-page (send c get-selection)))])
 

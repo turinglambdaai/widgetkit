@@ -5,14 +5,16 @@
          racket/gui/base
          widgetkit)
 
-(define f (new frame% [label "labeled-field% demo"] [width 420] [height 140]
-               [alignment '(center center)]))
+(define f
+  (new frame% [label "labeled-field% demo"] [width 420] [height 140] [alignment '(center center)]))
 
 ;; One class, consistent init fields — no need to remember that cue-mixin
 ;; takes 2 args and must be composed with tooltip-mixin.
-(new labeled-field% [parent f] [label "Name:"]
-     [cue "Enter your name"] [tooltip "Your full name"])
-(new labeled-field% [parent f] [label "Email:"]
-     [cue "you@example.com"] [tooltip "We never share this"])
+(new labeled-field% [parent f] [label "Name:"] [cue "Enter your name"] [tooltip "Your full name"])
+(new labeled-field%
+     [parent f]
+     [label "Email:"]
+     [cue "you@example.com"]
+     [tooltip "We never share this"])
 
 (send f show #t)

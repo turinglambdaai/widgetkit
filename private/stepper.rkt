@@ -7,7 +7,8 @@
 (require racket/class
          racket/gui/base)
 
-(provide stepper% clamp)
+(provide stepper%
+         clamp)
 
 ;; Clamp v into the closed interval [lo, hi].
 (define (clamp v lo hi)
@@ -28,16 +29,15 @@
                 [callback (λ (self) (void))]
                 [show-value #t])
 
-    (super-new
-     [alignment '(center center)]
-     [stretchable-height #f]
-     [spacing 4])
+    (super-new [alignment '(center center)] [stretchable-height #f] [spacing 4])
 
     (define current (clamp initial min-value max-value))
     (define value-label #f)
 
     (define refresh-label
-      (λ () (when value-label (send value-label set-label (number->string current)))))
+      (λ ()
+        (when value-label
+          (send value-label set-label (number->string current)))))
 
     ;; Apply a (possibly out-of-range, possibly inexact) new value, clamping and
     ;; notifying only on actual change.

@@ -35,7 +35,6 @@
   (send bar set-progress 0)
   (set! tick-timer (new timer% [notify-callback tick] [interval 80])))
 
-(new button% [parent content] [label "Run a short task"]
-     [callback (λ (_b _e) (run-task))])
+(new button% [parent content] [label "Run a short task"] [callback (λ (_b _e) (run-task))])
 
 (send f show #t)
