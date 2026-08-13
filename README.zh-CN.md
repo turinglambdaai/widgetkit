@@ -2,7 +2,7 @@
 
 为 Racket 精选的 GUI 控件集合。它把几乎每个 `racket/gui` 应用都要用、而核心工具库又没提供、得自己从头写的控件——工具提示、占位符文本、网格布局、日期输入、虚拟列表、状态栏、不确定进度、步进器——聚合到一个 `(require widgetkit)` 之下，配一本手册和每个控件一个可运行的示例。
 
-![Racket](https://img.shields.io/badge/Racket-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![Racket](https://img.shields.io/badge/Racket-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![CI](https://github.com/turinglambdaai/widgetkit/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/widgetkit/actions/workflows/ci.yml)
 
 [English](README.md) · **中文**
 

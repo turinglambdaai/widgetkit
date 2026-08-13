@@ -2,7 +2,7 @@
 
 A curated collection of GUI widgets for Racket. It gathers the controls almost every `racket/gui` app wants but that the core toolkit leaves you to build yourself — tooltips and placeholder text, grid layout, date entry, virtualized lists, status bars, spinners and steppers — behind a single `(require widgetkit)`, with one manual and a runnable example per widget.
 
-![Racket](https://img.shields.io/badge/Racket-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
+![Racket](https://img.shields.io/badge/Racket-9F1D20?logo=racket&logoColor=white) [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE) [![CI](https://github.com/turinglambdaai/widgetkit/actions/workflows/ci.yml/badge.svg)](https://github.com/turinglambdaai/widgetkit/actions/workflows/ci.yml)
 
 **English** · [中文](README.zh-CN.md)
 
