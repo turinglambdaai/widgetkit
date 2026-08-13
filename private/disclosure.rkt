@@ -40,7 +40,7 @@
       (set! expanded? (not expanded?))
       (send header set-label (header-label))
       (send content show expanded?)
-      (callback this))
+      (void (callback this)))
 
     ;; The panel to add collapsible children to.
     (define/public (get-content) content)

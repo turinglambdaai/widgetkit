@@ -88,4 +88,5 @@
     (define/public (get-text) (send editor get-text))
 
     ;; Scroll so the most recent line is visible.
-    (define/public (scroll-to-bottom) (send editor scroll-to-position (send editor last-position)))))
+    (define/public (scroll-to-bottom)
+      (void (send editor scroll-to-position (send editor last-position))))))

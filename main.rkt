@@ -132,7 +132,9 @@ SOFTWARE.
                     (get-first (->m container/c))
                     (get-second (->m container/c)))]
           ;; toolbar%
-          [toolbar% (class/c (add-button (->m string? (-> any) void?)) (add-separator (->m void?)))]
+          [toolbar%
+           (class/c (add-button (->m string? (-> any) (is-a?/c button%)))
+                    (add-separator (->m (is-a?/c canvas%))))]
           ;; search-field%
           [search-field% (class/c (get-text (->m string?)) (set-text (->m string? void?)))]
           ;; stack%

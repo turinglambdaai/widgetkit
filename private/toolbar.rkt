@@ -33,11 +33,13 @@
 
     (super-new [alignment alignment] [stretchable-height #f] [spacing 4] [border 2])
 
-    ;; Add a button whose callback is a no-argument thunk.
+    ;; Add a button whose callback is a no-argument thunk; returns the button%
+    ;; (e.g. to enable/disable it later).
     (define/public (add-button label cb)
       (new button% [parent this] [label label] [callback (λ (_b _e) (cb))]))
 
-    ;; Add a thin vertical separator between groups of actions.
+    ;; Add a thin vertical separator between groups of actions; returns the
+    ;; separator canvas%.
     (define/public (add-separator)
       (new canvas%
            [parent this]

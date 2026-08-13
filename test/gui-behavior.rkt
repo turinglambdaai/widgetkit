@@ -128,3 +128,53 @@
 (let ([sf (new search-field% [parent f] [callback (lambda (_q) (void))])])
   (send sf set-text "query")
   (check-equal? (send sf get-text) "query" "search-field stores text"))
+
+;; ---------------------------------------------------------------------------
+;; toolbar% -- add-button / add-separator return the created widgets
+;; ---------------------------------------------------------------------------
+(let ([tb (new toolbar% [parent f])])
+  (check-pred (is-a?/c button%) (send tb add-button "x" void) "toolbar add-button returns the button")
+  (check-pred (is-a?/c canvas%)
+              (send tb add-separator)
+              "toolbar add-separator returns the separator canvas"))
+
+;; ---------------------------------------------------------------------------
+;; disclosure% -- a user callback returning non-void must not leak out of
+;; set-expanded! (whose contract promises void?)
+;; ---------------------------------------------------------------------------
+(let ([d (new disclosure% [parent f] [label "x"] [callback (lambda (_self) 'leaked)])])
+  (check-false (send d is-expanded?) "disclosure starts collapsed")
+  (send d set-expanded! #t)
+  (check-true (send d is-expanded?) "disclosure expands despite non-void callback"))
+
+;; ---------------------------------------------------------------------------
+;; status-bar% -- set-progress / clear
+;; ---------------------------------------------------------------------------
+(let ([bar (new status-bar% [parent f] [show-progress #t])])
+  (send bar set-progress 100)
+  (send bar clear)
+  (check-equal? (send bar get-message) "" "status-bar clear empties the message"))
+
+;; ---------------------------------------------------------------------------
+;; progress-dialog% -- set-progress / set-message / cancelled?
+;; ---------------------------------------------------------------------------
+(let ([pd (new progress-dialog% [parent f] [label "t"] [cancellable #t])])
+  (send pd set-progress 50)
+  (send pd set-message "halfway")
+  (check-false (send pd cancelled?) "progress-dialog starts not cancelled"))
+
+;; ---------------------------------------------------------------------------
+;; log-view% -- scroll-to-bottom is callable
+;; ---------------------------------------------------------------------------
+(let ([lv (new log-view% [parent f])])
+  (send lv append-line "x")
+  (send lv scroll-to-bottom))
+
+;; ---------------------------------------------------------------------------
+;; stack% -- show-page switches without error
+;; ---------------------------------------------------------------------------
+(let ([s (new stack% [parent f])])
+  (send s add-page)
+  (send s add-page)
+  (send s show-page 1)
+  (check-equal? (send s page-count) 2 "stack still counts pages"))

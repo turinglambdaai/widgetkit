@@ -4,6 +4,21 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.7.2] — 2026-08-13
+
+### Fixed
+- `toolbar%` `add-button` / `add-separator` return the created `button%` /
+  separator canvas (the `void?` contracts were wrong and rejected the widgets
+  they created); contracts and docs updated accordingly.
+- `log-view%` `scroll-to-bottom` no longer leaks `scroll-to-position`'s return
+  value out of its `void?` contract.
+- `disclosure%` `set-expanded!` no longer leaks the user callback's return
+  value out of its `void?` contract.
+
+### Added — testing
+- Behavioral tests now exercise every public method's return contract,
+  catching the whole class above (34 behavioral checks).
+
 ## [0.7.1] — 2026-08-13
 
 ### Added — testing

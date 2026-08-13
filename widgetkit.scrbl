@@ -237,7 +237,9 @@ share in @racket[0..1].
 @subsection[#:tag "toolbar"]{toolbar%}
 
 A fixed-height row of action buttons with separators. Callbacks are
-no-argument thunks; any other widget can be added with @racket[[parent tb]].
+no-argument thunks; @racket[add-button] returns the created @racket[button%]
+and @racket[add-separator] the separator canvas. Any other widget can be added
+with @racket[[parent tb]].
 
 @racketblock[
 (send tb add-button "Open" (λ () ...))
