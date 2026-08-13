@@ -64,6 +64,7 @@ A curated collection of GUI widgets for Racket. Two rules:
 | Display an image (fit or fixed scale) | `image-view%` | `(new image-view% [parent f] [bitmap bmp] [scale 'fit])` or `(send iv load-file "x.png")` |
 | Bottom status bar (+ optional progress) | `status-bar%` | `(new status-bar% [parent f] [show-progress #t] [initial-message "Ready."])` |
 | Modal "Working… / Cancel" dialog | `progress-dialog%` | `(new progress-dialog% [parent f] [label "..."])`; drive from a thread + `queue-callback`, see `examples/progress-dialog-demo.rkt` |
+| Transient dismissible banner (toast) | `notification-banner%` | `(new notification-banner% [parent f])`; `(send nb show-message "Saved." 'success 3000)` auto-dismisses; `#f` ms keeps it up |
 | Scrolling log / console output | `log-view%` | `(new log-view% [parent f] [max-lines 5000])`; `(send log append-line "...")` auto-scrolls |
 | Draggable split panes | `split-view%` | `(new split-view% [parent f] [orientation 'horizontal] [fraction 0.4])`; add children to `(send sv get-first)` / `get-second` |
 | App toolbar (buttons + separators) | `toolbar%` | `(new toolbar% [parent f])`; `(send tb add-button "Open" (λ () ...))`; `(send tb add-separator)` |

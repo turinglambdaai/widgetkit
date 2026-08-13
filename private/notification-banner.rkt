@@ -1,0 +1,105 @@
+#lang racket/base
+
+;; SPDX-License-Identifier: MIT
+;; Copyright (c) 2026 jrtxio <jirentianxiang1024@gmail.com>
+;; See LICENSE at the repository root for full terms.
+
+(require racket/class
+         racket/gui/base)
+
+(provide notification-banner%)
+
+;; notification-banner% -- a transient, dismissible message strip pinned to the
+;; top of a window, with a severity (info/success/warning/error). It collapses
+;; (hides itself) when dismissed or after an optional auto-dismiss timeout.
+;;
+;; Why this exists: this is the "flash a result, then it goes away" pattern
+;; (SwiftUI banner, GTK in-app notification, web toast). core racket/gui has
+;; `message-box` (modal, blocking) but no lightweight inline banner; our
+;; `status-bar%` is for persistent text. notification-banner% fills the gap.
+;;
+;;   (define nb (new notification-banner% [parent f]))
+;;   (send nb show-message "Saved." 'success 3000)       ; auto-dismiss after 3s
+;;   (send nb show-message "Check input." 'warning #f)   ; stays until dismissed
+(define (tint s)
+  (case s
+    [(success) (make-object color% #xe8 #xf6 #xee)]
+    [(warning) (make-object color% #xfd #xf1 #xe0)]
+    [(error) (make-object color% #xfd #xea #xeb)]
+    [(info) (make-object color% #xe7 #xf3 #xfe)]
+    [else (make-object color% #xf0 #xf0 #xf0)]))
+
+(define (accent s)
+  (case s
+    [(success) "seagreen"]
+    [(warning) "darkorange"]
+    [(error) "crimson"]
+    [(info) "dodgerblue"]
+    [else "gray"]))
+
+(define notification-banner%
+  (class canvas%
+    (init-field [min-height 32])
+
+    (super-new [stretchable-height #f] [stretchable-width #t] [min-height min-height] [min-width 120])
+
+    (inherit get-dc
+             get-client-size
+             refresh)
+
+    (define text #f)
+    (define severity 'info)
+    (define timer #f)
+
+    ;; Start hidden; the banner only appears on show-message.
+    (send this show #f)
+
+    ;; Show a message. severity is one of info/success/warning/error; pass #f
+    ;; for auto-dismiss-ms to keep the banner up, or a number of milliseconds
+    ;; after which it hides itself.
+    (define/public (show-message msg sev auto-dismiss-ms)
+      (set! text
+            (if (string? msg)
+                msg
+                (format "~a" msg)))
+      (set! severity sev)
+      (send this show #t)
+      (refresh)
+      (when timer
+        (send timer stop)
+        (set! timer #f))
+      (when auto-dismiss-ms
+        (set! timer
+              (new timer%
+                   [notify-callback (lambda () (hide))]
+                   [interval auto-dismiss-ms]
+                   [just-once? #t]))))
+
+    ;; Hide (collapse) the banner.
+    (define/public (hide)
+      (when timer
+        (send timer stop)
+        (set! timer #f))
+      (set! text #f)
+      (send this show #f))
+
+    ;; The current message text, or #f when hidden.
+    (define/public (current-message) text)
+
+    (define/override (on-paint)
+      (when text
+        (define dc (get-dc))
+        (define-values (w h) (get-client-size))
+        (send dc set-pen (new pen% [style 'transparent]))
+        (send dc set-brush (new brush% [color (tint severity)] [style 'solid]))
+        (send dc draw-rectangle 0 0 w h)
+        (send dc set-pen (new pen% [color (accent severity)] [width 4] [style 'solid] [cap 'butt]))
+        (send dc draw-line 2 6 2 (- h 6))
+        (send dc draw-text text 14 7)
+        (send dc draw-text "x" (- w 16) 7)))
+
+    (define/override (on-event e)
+      (when (and (eq? (send e get-event-type) 'left-down) text)
+        (define-values (w h) (get-client-size))
+        (when (> (send e get-x) (- w 24))
+          (hide))))))

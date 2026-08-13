@@ -67,6 +67,7 @@ racket examples/showcase.rkt
 | `disclosure%` | no collapsible / expand-collapse container (the "Advanced options…" pattern) |
 | `image-view%` | `canvas%` exists, but no ready-made widget to just display an image (fit / fixed scale) |
 | `progress-dialog%` | no modal "Working… / Cancel" dialog for long tasks (core has `gauge%` only) |
+| `notification-banner%` | no transient dismissible banner / toast (core has only modal `message-box`) |
 | `log-view%` | no scrolling, read-only, auto-scroll log/console; raw `editor-canvas%` + `text%` traps users on stretch & auto-scroll |
 | `split-view%` | no draggable split panes (Qt QSplitter / GTK GtkPaned) |
 | `toolbar%` | no standard action toolbar with separators |
@@ -111,6 +112,7 @@ Every widget has a minimal, standalone runnable example in [`examples/`](example
 | `disclosure-demo.rkt` | `disclosure%` (collapsible section) |
 | `image-view-demo.rkt` | `image-view%` (display a bitmap) |
 | `progress-dialog-demo.rkt` | `progress-dialog%` (modal progress + cancel) |
+| `notification-banner-demo.rkt` | `notification-banner%` (toast / banner) |
 | `log-view-demo.rkt` | `log-view%` (scrolling log, flashing-tool style) |
 | `split-view-demo.rkt` | `split-view%` (draggable divider) |
 | `toolbar-demo.rkt` | `toolbar%` (toolbar driving a log) |

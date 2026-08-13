@@ -4,6 +4,14 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.7.0] — 2026-08-13
+
+### Added — gap-filling widgets
+- `notification-banner%` — a transient, dismissible, severity-colored banner
+  (the "toast"/in-app-notification pattern): non-blocking, auto-dismissable,
+  and distinct from the persistent `status-bar%` and the modal
+  `progress-dialog%`.
+
 ## [0.6.1] — 2026-08-13
 
 ### Changed — craft

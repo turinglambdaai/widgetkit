@@ -50,7 +50,8 @@ SOFTWARE.
          "private/split-view.rkt"
          "private/toolbar.rkt"
          "private/search-field.rkt"
-         "private/stack.rkt")
+         "private/stack.rkt"
+         "private/notification-banner.rkt")
 
 ;; A color accepted by racket/gui drawing: a color name/string or a color%.
 (define color/c (or/c string? (is-a?/c color%)))
@@ -142,7 +143,14 @@ SOFTWARE.
           ;; labeled-field% -- a text-field% subclass (cue + tooltip baked in)
           [labeled-field% (subclass?/c text-field%)]
           ;; text-list% -- a canvas-list% subclass
-          [text-list% (subclass?/c canvas-list%)]))
+          [text-list% (subclass?/c canvas-list%)]
+          ;; notification-banner%
+          [notification-banner%
+           (class/c
+            (show-message
+             (->m string? (or/c 'info 'success 'warning 'error) (or/c #f positive-real/c) void?))
+            (hide (->m void?))
+            (current-message (->m (or/c string? #f))))]))
 
 ;; ---------------------------------------------------------------------------
 ;; Layer 2 -- aggregated widgets (re-exported from mature upstream packages,

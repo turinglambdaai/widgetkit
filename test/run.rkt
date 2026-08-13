@@ -39,6 +39,7 @@
 (check-true (class? toolbar%) "toolbar% exported")
 (check-true (class? search-field%) "search-field% exported")
 (check-true (class? stack%) "stack% exported")
+(check-true (class? notification-banner%) "notification-banner% exported")
 (check-true (class? table-panel%) "table-panel% re-exported")
 (check-true (class? canvas-list%) "canvas-list% re-exported")
 (check-true (class? date-text-field%) "date-text-field% re-exported")

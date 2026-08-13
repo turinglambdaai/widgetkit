@@ -188,6 +188,24 @@ for the full pattern.
 Methods: @racket[(send pd set-progress n)], @racket[(send pd set-message s)],
 @racket[(send pd cancelled?)].
 
+@subsection[#:tag "notification-banner"]{notification-banner%}
+
+A transient, dismissible message strip (a ``toast''/banner) with a severity
+(info/success/warning/error), pinned to the top of a window. It collapses when
+dismissed (click near its right edge) or after an auto-dismiss timeout. Use it
+instead of a modal @racket[message-box] when you just want to flash a
+non-blocking result.
+
+@racketblock[
+(define nb (new notification-banner% [parent f]))
+(send nb show-message "Saved." 'success 3000)
+(send nb show-message "Check input." 'warning #f)
+]
+
+Methods: @racket[(send nb show-message text severity auto-dismiss-ms)] (pass
+@racket[#f] for @racket[auto-dismiss-ms] to keep it up), @racket[(send nb hide)],
+@racket[(send nb current-message)].
+
 @subsection[#:tag "log-view"]{log-view%}
 
 A scrolling, read-only, monospace log/console output that stretches to fill its
