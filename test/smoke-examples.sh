@@ -4,30 +4,38 @@
 # arities, missing methods, invalid init arguments, broken paint callbacks.
 #
 # Pass condition: the example is still running (window open) when the timeout
-# fires (watchdog kills it -> rc 124). Any other non-zero exit is a failure.
+# fires (rc 124). Any other non-zero exit is a failure.
 #
 # Usage: bash test/smoke-examples.sh
 # On headless Linux set RUNNER_OS=Linux (or have xvfb-run on PATH) so each
 # launch is wrapped in a virtual display.
 #
-# No external `timeout` command and no arrays: macOS ships bash 3.2 without
-# GNU coreutils, where `timeout` is missing and expanding an empty array
-# under `set -u` is an error.
+# Uses GNU timeout when available (it kills the whole process group, which
+# matters under xvfb-run); falls back to a pure-bash watchdog for macOS,
+# where no `timeout` ships and the child is plain racket.
 
 set -u
 
 TIMEOUT="${TIMEOUT:-8}"
 fail=0
 
-# Unquoted expansion is intentional: on Linux this becomes
+TIMEOUT_CMD=""
+if command -v timeout >/dev/null 2>&1; then
+  TIMEOUT_CMD=timeout
+elif command -v gtimeout >/dev/null 2>&1; then
+  TIMEOUT_CMD=gtimeout
+fi
+
+# Unquoted $RACKET expansion is intentional: on Linux it becomes
 # "xvfb-run -a racket", elsewhere just "racket".
 RACKET="racket"
 if [ "${RUNNER_OS:-}" = "Linux" ] && command -v xvfb-run >/dev/null 2>&1; then
   RACKET="xvfb-run -a racket"
 fi
 
-# run_with_timeout SECS CMD... -> runs CMD, kills it after SECS, returns 124
-# if it was killed, else the command's exit status.
+# run_with_timeout SECS CMD... -> kills the (single) command after SECS,
+# returns 124 if it was killed, else its exit status. Only used when GNU
+# timeout is unavailable.
 run_with_timeout() {
   secs=$1
   shift
@@ -46,8 +54,13 @@ run_with_timeout() {
 }
 
 for ex in examples/*.rkt; do
-  out=$(run_with_timeout "$TIMEOUT" $RACKET "$ex" 2>&1)
-  rc=$?
+  if [ -n "$TIMEOUT_CMD" ]; then
+    out=$($TIMEOUT_CMD "$TIMEOUT" $RACKET "$ex" 2>&1)
+    rc=$?
+  else
+    out=$(run_with_timeout "$TIMEOUT" $RACKET "$ex" 2>&1)
+    rc=$?
+  fi
   if [ "$rc" -eq 124 ]; then
     echo "OK   $ex"
   else
