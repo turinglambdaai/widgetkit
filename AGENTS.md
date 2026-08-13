@@ -125,6 +125,9 @@ otherwise copy:
   base-class)` — it is not a plain `class -> class` mixin. `tooltip-mixin`
   is `(tooltip-mixin base-class)` (1 arg). Prefer `labeled-field%`, which
   bakes in the correct composition.
+- **`cue-mixin` fires the field callback at construction time** (when the cue
+  text is inserted). Any function the callback references must be defined
+  BEFORE the field is constructed — see examples/search-field-demo.rkt.
 - **`canvas-list%` callbacks are 3-argument**: `(λ (canvas item event) ...)`
   for `action-callback` / `selection-callback`. Prefer `text-list%` for a list
   of strings with a one-argument `(λ (item) ...)` action.

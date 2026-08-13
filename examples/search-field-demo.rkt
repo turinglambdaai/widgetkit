@@ -15,9 +15,8 @@
 (define lst
   (new text-list% [parent f] [items (list->vector all-items)] [item-height 22] [min-height 280]))
 
-;; The callback fires on every keystroke with the current query.
-(new search-field% [parent f] [callback (λ (q) (refresh q))])
-
+;; NOTE: define the callback's target BEFORE constructing the search-field%:
+;; inserting the cue text fires the callback once at construction time.
 (define (refresh q)
   (define needle (string-downcase (string-trim q)))
   (define matches
@@ -25,5 +24,8 @@
         all-items
         (filter (λ (s) (string-contains? (string-downcase s) needle)) all-items)))
   (send lst set-items (list->vector matches)))
+
+;; The callback fires on every keystroke with the current query.
+(new search-field% [parent f] [callback (λ (q) (refresh q))])
 
 (send f show #t)
