@@ -41,7 +41,9 @@ run_with_timeout() {
   shift
   "$@" &
   pid=$!
-  (sleep "$secs" && kill -TERM "$pid" 2>/dev/null) &
+  # SIGKILL, not SIGTERM: Racket treats TERM as a user break and exits with
+  # status 1, which we could not distinguish from a real failure.
+  (sleep "$secs" && kill -KILL "$pid" 2>/dev/null) &
   watchdog=$!
   wait "$pid"
   rc=$?
