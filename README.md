@@ -140,7 +140,8 @@ A tree / outline view already ships with Racket as [`mrlib/hierlist`](https://do
 ## Development
 
 ```bash
-raco test test/run.rkt        # logic tests (run anywhere, no display needed)
+raco test test/run.rkt               # logic tests (run anywhere, no display)
+bash test/run-gui-behavior.sh        # behavioral tests (need a display; Xvfb on Linux)
 raco make main.rkt examples/*.rkt
 raco scribble --dest doc widgetkit.scrbl # build the manual into doc/
 ```

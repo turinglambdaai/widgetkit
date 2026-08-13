@@ -157,7 +157,9 @@ otherwise copy:
    (exit 0)
    ```
 3. **Run the example:** `racket examples/<widget>-demo.rkt` (needs a display).
-4. **Logic tests:** `raco test test/run.rkt`
+4. **Tests:** `raco test test/run.rkt` (pure logic, runs anywhere) and
+   `bash test/run-gui-behavior.sh` (real widget behavior; needs a display,
+   wrapped in Xvfb on headless Linux).
 5. **Launch all examples:** `bash test/smoke-examples.sh`
 
 The smoke script (step 5) is the guard that catches runtime errors like a bad

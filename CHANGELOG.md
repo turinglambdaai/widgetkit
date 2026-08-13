@@ -4,6 +4,17 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.7.1] — 2026-08-13
+
+### Added — testing
+- `test/gui-behavior.rkt` — a behavioral test suite that instantiates the
+  widgets and exercises real logic (stepper clamping, log-view append/trim,
+  status-bar messages, spinner start/stop, disclosure expand, image-view
+  round-trip, split-view fraction + contract rejection, stack page count,
+  notification-banner show/hide, search-field text). It needs a display, so it
+  runs under Xvfb on headless Linux via `test/run-gui-behavior.sh` (wired into
+  CI). `test/run.rkt` stays pure and runs anywhere.
+
 ## [0.7.0] — 2026-08-13
 
 ### Added — gap-filling widgets

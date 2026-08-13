@@ -51,3 +51,10 @@ jobs:
         env:
           RUNNER_OS: ${{ runner.os }}
         run: bash test/smoke-examples.sh
+
+      - name: Run GUI behavioral tests
+        # Real behavior (clamping, append/trim, show/hide). Needs a display;
+        # run-gui-behavior.sh wraps it in Xvfb on headless Linux.
+        env:
+          RUNNER_OS: ${{ runner.os }}
+        run: bash test/run-gui-behavior.sh

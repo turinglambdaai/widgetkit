@@ -140,7 +140,8 @@ racket examples/status-bar-demo.rkt   # 任选一个
 ## 开发
 
 ```bash
-raco test test/run.rkt        # 逻辑测试（任意环境可跑，无需显示）
+raco test test/run.rkt               # 逻辑测试（任意环境可跑，无需显示）
+bash test/run-gui-behavior.sh        # 行为测试（需要显示；Linux 下用 Xvfb）
 raco make main.rkt examples/*.rkt
 raco scribble --dest doc widgetkit.scrbl # 构建手册到 doc/
 ```
