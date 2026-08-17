@@ -135,7 +135,9 @@ otherwise copy:
   `define/augment` it.
 - **`date-text-field%` starts a one-shot timer** scheduled to fire at the next
   midnight. A script that constructs one will not exit on its own; call
-  `(exit 0)` in non-GUI scripts. It is harmless inside a real app.
+  `(exit 0)` in non-GUI scripts. It is harmless inside a real app. This is why
+  `examples/date-input-demo.rkt` and `examples/showcase.rkt` keep their whole
+  body in `(module+ main ...)` — see the launch-code rule below.
 - **Modal dialogs block in `show #t`.** Work that updates a modal dialog (e.g.
   `progress-dialog%`) must run in a separate thread and touch the UI via
   `queue-callback`; running it inline in the callback freezes the dialog. See
@@ -163,7 +165,19 @@ otherwise copy:
 4. **Tests:** `raco test test/run.rkt` (pure logic, runs anywhere) and
    `bash test/run-gui-behavior.sh` (real widget behavior; needs a display,
    wrapped in Xvfb on headless Linux).
-5. **Launch all examples:** `bash test/smoke-examples.sh`
+5. **Catalog-build simulation:** `bash test/run-examples.sh` runs
+   `raco test examples/`, which instantiates every example **without** running
+   its `main` submodule — exactly what the package catalog build (DrDr) does.
+   Launch code therefore lives in `(module+ main ...)`:
+   ```racket
+   ;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+   (module+ main
+     (send f show #t))
+   ```
+   Top-level launch code (or constructing a `date-text-field%` at
+   instantiation — it arms a midnight timer) hangs the process and times out
+   both this script and the catalog build.
+6. **Launch all examples:** `bash test/smoke-examples.sh`
 
 The smoke script (step 5) is the guard that catches runtime errors like a bad
 callback arity or a missing method — run it before considering GUI code done.
@@ -189,7 +203,9 @@ callback arity or a missing method — run it before considering GUI code done.
 
 (define bar (new status-bar% [parent f] [show-progress #t] [initial-message "Ready."]))
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))
 ```
 
 For a fuller, realistic example combining several widgets (`table-panel%`,

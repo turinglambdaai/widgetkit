@@ -28,4 +28,6 @@
 
 (new message% [parent f] [label "Click an action above. Click the 'x' on a banner to dismiss it."])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

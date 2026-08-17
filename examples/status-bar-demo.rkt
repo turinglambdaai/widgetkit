@@ -37,4 +37,6 @@
 
 (new button% [parent content] [label "Run a short task"] [callback (λ (_b _e) (run-task))])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

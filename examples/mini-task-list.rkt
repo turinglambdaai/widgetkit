@@ -84,4 +84,6 @@
   (status "Cleared all."))
 
 (refresh)
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

@@ -23,4 +23,6 @@
 (send log append-line "Drag the divider to resize the two panes.")
 (send log append-line "Left = get-first (a list), right = get-second (this log).")
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

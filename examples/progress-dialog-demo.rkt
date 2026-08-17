@@ -37,9 +37,12 @@
                   (queue-callback (λ () (send pd show #f))))))
   (send pd show #t))
 
-;; Auto-run once shortly after the window appears, so launching the example
-;; exercises the whole modal/worker flow without a manual click.
-(void (thread (λ ()
-                (sleep 0.3)
-                (queue-callback (λ () (run))))))
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test),
+;; without the auto-run thread opening a modal dialog.
+(module+ main
+  ;; Auto-run once shortly after the window appears, so launching the example
+  ;; exercises the whole modal/worker flow without a manual click.
+  (void (thread (λ ()
+                  (sleep 0.3)
+                  (queue-callback (λ () (run))))))
+  (send f show #t))

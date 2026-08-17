@@ -37,4 +37,6 @@
 (send log append-line "Bootloader v2.3 — ready.")
 (send log append-line "Press 'Append log line' to stream output; the view auto-scrolls.")
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

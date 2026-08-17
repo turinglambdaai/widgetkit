@@ -17,4 +17,6 @@
      [item-height 22]
      [action-callback (λ (cl item event) (printf "activated: ~a\n" item))])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

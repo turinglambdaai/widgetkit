@@ -24,4 +24,6 @@
 (new disclosure% [parent f] [label "Defaults"] [expanded? #t])
 (new button% [parent f] [label "Reset everything"] [callback (λ (_b _e) (printf "reset\n"))])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

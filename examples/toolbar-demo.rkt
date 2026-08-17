@@ -16,4 +16,6 @@
 (send tb add-button "Quit" (λ () (send f show #f)))
 
 (send log append-line "Toolbar ready — try the buttons above.")
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

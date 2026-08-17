@@ -27,4 +27,6 @@
 (new message% [parent p2] [label "Page three has its own content."])
 
 (send pages show-page 0)
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

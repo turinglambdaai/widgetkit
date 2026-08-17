@@ -49,6 +49,15 @@ jobs:
           RUNNER_OS: ${{ runner.os }}
         run: bash test/run-pure.sh
 
+      - name: Instantiate examples under raco test (catalog-build simulation)
+        # Mirrors what the package catalog build (DrDr) runs: each example is
+        # instantiated WITHOUT running its `main` submodule. Guards the
+        # convention that launch code lives in (module+ main ...); a top-level
+        # show or an armed timer would time out here and on the catalog build.
+        env:
+          RUNNER_OS: ${{ runner.os }}
+        run: bash test/run-examples.sh
+
       - name: Smoke-test that every example launches
         # Catches runtime errors raco make cannot (bad callback arity, missing
         # method, broken paint). Pass = window opened, killed by timeout (124).

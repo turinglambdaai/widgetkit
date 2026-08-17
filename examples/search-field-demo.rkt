@@ -28,4 +28,6 @@
 ;; The callback fires on every keystroke with the current query.
 (new search-field% [parent f] [callback (λ (q) (refresh q))])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

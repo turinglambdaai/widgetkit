@@ -17,4 +17,6 @@
      [item-height 22]
      [action (λ (item) (printf "picked: ~a\n" item))])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

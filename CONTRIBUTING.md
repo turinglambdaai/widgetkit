@@ -23,10 +23,15 @@ A new widget PR should include:
 - [ ] A re-export from `main.rkt` (grouped by category, with a comment).
 - [ ] **A standalone, runnable example** in `examples/` (this is required — a
       GUI library is only useful if people can see and copy a working example).
+      Keep launch code (`(send f show #t)`, worker threads) in
+      `(module+ main ...)`: `raco test` instantiates examples without running
+      `main`, which is what the package catalog build does — top-level launch
+      code times it out.
 - [ ] A section in `widgetkit.scrbl` (signature + example) and a row in both
       README tables (English and Chinese), stating the gap it fills.
 - [ ] Logic tests in `test/run.rkt` for any pure helpers.
-- [ ] `raco make main.rkt examples/*.rkt` passes and `raco test` is green.
+- [ ] `raco make main.rkt examples/*.rkt` passes and `raco test` is green
+      (including `bash test/run-examples.sh`).
 
 ## Licensing
 
@@ -42,6 +47,7 @@ A new widget PR should include:
 ```bash
 raco pkg install --link .        # link the local checkout as a package
 raco test test/run.rkt
+bash test/run-examples.sh        # instantiate examples under raco test (catalog-build simulation)
 raco make main.rkt examples/*.rkt
 raco scribble --dest doc widgetkit.scrbl    # builds doc/widgetkit.html
 ```

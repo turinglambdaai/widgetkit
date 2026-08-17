@@ -21,4 +21,6 @@
 
 (new image-view% [parent f] [bitmap bmp] [scale 'fit])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

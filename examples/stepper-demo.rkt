@@ -15,4 +15,6 @@
      [initial 1]
      [callback (λ (self) (printf "stepper value: ~a\n" (send self get-value)))])
 
-(send f show #t)
+;; `racket` runs `main`; `raco test` only instantiates the module (smoke test).
+(module+ main
+  (send f show #t))

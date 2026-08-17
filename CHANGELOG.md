@@ -4,6 +4,19 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.7.3] — 2026-08-17
+
+### Fixed — packaging
+- Examples no longer time out the package catalog build (DrDr /
+  `raco test --package`, which instantiates every file without running its
+  `main` submodule). Launch code (`(send f show #t)`, the progress dialog's
+  auto-run thread) now lives in `(module+ main ...)`, so instantiation is a
+  construction smoke test that exits cleanly. `date-input-demo.rkt` and
+  `showcase.rkt` keep their whole body in `main`, because constructing a
+  `date-text-field%` arms a midnight timer that keeps the process alive.
+- CI now runs `bash test/run-examples.sh` (`raco test examples/`) to mirror
+  the catalog build and guard the `module+ main` convention.
+
 ## [0.7.2] — 2026-08-13
 
 ### Fixed
