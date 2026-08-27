@@ -43,10 +43,11 @@
     (define running? #f)
     (define timer #f)
 
-    ;; One animation step: advance the angle and repaint.
+    ;; One animation step: advance the angle and repaint. The angle wraps at a
+    ;; full turn so a spinner left running for days never loses float precision.
     (define tick
       (λ ()
-        (set! angle (+ angle 0.35))
+        (set! angle (modulo (+ angle 0.35) (* 2.0 pi)))
         (refresh)))
 
     ;; Begin spinning. Idempotent.

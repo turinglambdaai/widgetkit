@@ -136,16 +136,19 @@ SOFTWARE.
            (class/c (add-button (->m string? (-> any) (is-a?/c button%)))
                     (add-separator (->m (is-a?/c canvas%))))]
           ;; search-field%
-          [search-field% (class/c (get-text (->m string?)) (set-text (->m string? void?)))]
+          [search-field%
+           (class/c (init-field [label (or/c string? #f)] [cue string?] [callback (-> string? any/c)])
+                    (get-text (->m string?))
+                    (set-text (->m string? void?)))]
           ;; stack%
           [stack%
            (class/c (add-page (->m container/c))
                     (page-count (->m exact-nonnegative-integer?))
                     (show-page (->m exact-nonnegative-integer? void?)))]
           ;; labeled-field% -- a text-field% subclass (cue + tooltip baked in)
-          [labeled-field% (subclass?/c text-field%)]
+          [labeled-field% (class/c (init-field [cue string?] [tooltip (or/c string? #f)]))]
           ;; text-list% -- a canvas-list% subclass
-          [text-list% (subclass?/c canvas-list%)]
+          [text-list% (class/c (init-field [action (-> any/c any/c)]))]
           ;; notification-banner%
           [notification-banner%
            (class/c

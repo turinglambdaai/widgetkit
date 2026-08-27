@@ -4,6 +4,23 @@ All notable changes to widgetkit are documented here.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
+## [0.8.0] — 2026-08-27
+
+### Fixed
+- `notification-banner%` now truncates long messages with an ellipsis so text
+  no longer runs off the canvas or under the close "x".
+- `spinner%` wraps its sweep angle once per turn, so a spinner left running
+  for days never accumulates an unbounded (eventually imprecise) angle.
+
+### Added
+- `notification-banner%` close zone now shows a hover highlight and a hand
+  cursor, making the dismiss affordance discoverable.
+- Contracts for the remaining loosely-specified exports: `search-field%`
+  (`label`, `cue`, `callback` init fields), `labeled-field%` (`cue`,
+  `tooltip`), and `text-list%` (`action`). Misuse now fails fast with caller
+  blame like the rest of the API.
+- Behavioral tests: clicking inside vs. outside the banner's close zone.
+
 ## [0.7.3] — 2026-08-17
 
 ### Fixed — packaging

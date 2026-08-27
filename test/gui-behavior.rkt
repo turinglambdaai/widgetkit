@@ -123,6 +123,26 @@
   (check-equal? (send nb current-message) #f "banner hides"))
 
 ;; ---------------------------------------------------------------------------
+;; notification-banner% -- click closes only inside the close zone. The frame
+;; must be shown once so the canvas reports a real client size (a hidden frame
+;; gives 1x1, where every x lands in the last 24 pixels).
+;; ---------------------------------------------------------------------------
+(let ([nb (new notification-banner% [parent f])])
+  (send f show #t)
+  (send nb show-message "hi" 'info #f)
+  (define w
+    (let-values ([(w h) (send nb get-client-size)])
+      w))
+  (check-true (> w 24) "banner has a real client width")
+  (define (click x)
+    (send nb on-event (new mouse-event% [event-type 'left-down] [x x] [y 5])))
+  (click 10)
+  (check-equal? (send nb current-message) "hi" "click on the body does not dismiss")
+  (click (- w 10))
+  (check-equal? (send nb current-message) #f "click in the close zone dismisses")
+  (send f show #f))
+
+;; ---------------------------------------------------------------------------
 ;; search-field% -- text round-trip
 ;; ---------------------------------------------------------------------------
 (let ([sf (new search-field% [parent f] [callback (lambda (_q) (void))])])
